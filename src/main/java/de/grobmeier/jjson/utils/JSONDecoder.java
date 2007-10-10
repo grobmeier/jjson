@@ -15,6 +15,7 @@
  */
 package de.grobmeier.jjson.utils;
 
+import de.grobmeier.jjson.JSONArray;
 import de.grobmeier.jjson.JSONObject;
 import de.grobmeier.jjson.JSONString;
 import de.grobmeier.jjson.JSONValue;
@@ -145,14 +146,20 @@ public class JSONDecoder {
     }
     
     public JSONValue decode() {
-        if(reader.current() == Opener.jsonobject.sign) {
+        char current = reader.current();
+        if(current == Opener.jsonobject.sign) {
             return decodeObject();
-        } else if(reader.current() == Opener.jsonstring.sign) {
+        } else if(current == Opener.jsonstring.sign) {
             return decodeString();
+        } else if(current == Opener.jsonarray.sign) {
+            return decodeArray();
         }
         return null;
     }
     
+    /**
+     * @return
+     */
     private JSONObject decodeObject() {
         JSONObject result = new JSONObject();
         
@@ -179,6 +186,27 @@ public class JSONDecoder {
         }
         return result;
     }
+    
+    /**
+     * @return
+     */
+    private JSONArray decodeArray() {
+        JSONArray result = new JSONArray();
+        
+        boolean hasNext = true;
+        while(hasNext) {
+            // key must be a string
+            reader.next();
+            JSONValue value = decode();
+            result.add(value);
+            reader.next();
+            if(reader.current() == Closer.jsonarray.sign) {
+                hasNext = false;
+            } 
+        }
+        return result;
+    }
+    
     /**
      * @param input
      * @return
@@ -198,7 +226,6 @@ public class JSONDecoder {
         } else {
             return new JSONString("");
         }
-        
         return new JSONString(result.toString());
     }
 }
