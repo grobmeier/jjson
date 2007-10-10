@@ -45,4 +45,13 @@ public class JSONString implements JSONValue {
         result.append("\"");
         return result.toString();
     }
+
+    /**
+     * (non-Javadoc)
+     * @see java.lang.Object#toString()
+     */
+    @Override
+    public String toString() {
+        return buffer.toString();
+    }
 }
