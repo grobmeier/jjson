@@ -71,7 +71,15 @@ public class JSONDecoderTest {
     @Test
     public final void testDecodeArrayWithObjects() {
         JSONDecoder decoder = 
-            new JSONDecoder("[\"key1\",\"key2\",{\"key3\":\"value3\"}]");
+            new JSONDecoder("[\"key1\",\"key2\",{\"key3\",\"value3\"}]");
+        JSONValue result = decoder.decode();
+        System.out.println(result.toJSON());
+    }
+    
+    @Test
+    public final void testDecodeArrayWithNumber() {
+        JSONDecoder decoder = 
+            new JSONDecoder("[\"key1\",\"key2\",12345]");
         JSONValue result = decoder.decode();
         System.out.println(result.toJSON());
     }
