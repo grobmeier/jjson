@@ -196,7 +196,9 @@ public class JSONDecoder {
      */
     private JSONNumber decodeNumber() {
         StringBuffer sb = new StringBuffer();
-        sb.append(reader.current());
+        if(reader.current() != Opener.PLUS.sign) {
+            sb.append(reader.current());
+        }
         
         while(reader.next()) {
             char temp = reader.current();
@@ -221,12 +223,6 @@ public class JSONDecoder {
         }
         // parsing to make sure the string is a number
         return new JSONNumber(number.toString());
-//        if(number.getClass().equals(Double.class)) {
-//            return new JSONNumber(number.doubleValue());
-//        } else if(number.getClass().equals(Long.class)) {
-//            return new JSONNumber(number.longValue());
-//        }
-//        return new JSONNumber(0);
     }
     
     /**
