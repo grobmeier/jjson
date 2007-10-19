@@ -17,6 +17,7 @@ package de.grobmeier.jjson.utils;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.Locale;
 
 import de.grobmeier.jjson.JSONArray;
 import de.grobmeier.jjson.JSONNumber;
@@ -24,8 +25,14 @@ import de.grobmeier.jjson.JSONObject;
 import de.grobmeier.jjson.JSONString;
 import de.grobmeier.jjson.JSONValue;
 
+/**
+ * 
+ */
 public class JSONDecoder {
-    private static NumberFormat numberFormat = NumberFormat.getInstance();
+    // Use English locale, cause the json spec allows only . as seperator
+    private static NumberFormat numberFormat = 
+        NumberFormat.getInstance(Locale.ENGLISH);
+    
     private JSONReader reader = null;
     /**
      * 
