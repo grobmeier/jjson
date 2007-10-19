@@ -25,7 +25,7 @@ public class JSONDecoderTest {
 
     @Test
     public final void testDecodeSimpleString() {
-        JSONDecoder decoder = new JSONDecoder("\"hello");
+        JSONDecoder decoder = new JSONDecoder("\"hello\"");
         JSONValue result = decoder.decode();
         TestCase.assertEquals("\"hello\"",result.toJSON());
     }
@@ -41,7 +41,7 @@ public class JSONDecoderTest {
     public final void testDecodeObject() {
         JSONDecoder decoder = new JSONDecoder("{\"key\":\"value\"}");
         JSONValue result = decoder.decode();
-        System.out.println(result.toJSON());
+        TestCase.assertEquals("{\"key\":\"value\"}", result.toJSON());
     }
 
     @Test
@@ -49,7 +49,9 @@ public class JSONDecoderTest {
         JSONDecoder decoder = 
             new JSONDecoder("{\"key\":\"value\",\"key2\":\"value2\"}");
         JSONValue result = decoder.decode();
-        System.out.println(result.toJSON());
+        TestCase.assertEquals(
+                "{\"key\":\"value\",\"key2\":\"value2\"}", 
+                result.toJSON());
     }
     
     @Test
@@ -57,23 +59,27 @@ public class JSONDecoderTest {
         JSONDecoder decoder = 
             new JSONDecoder("{\"key\":\"value\",\"key2\":{\"key3\":\"value2\"}}");
         JSONValue result = decoder.decode();
-        System.out.println(result.toJSON());
+        TestCase.assertEquals(
+                "{\"key\":\"value\",\"key2\":{\"key3\":\"value2\"}}", 
+                result.toJSON());
     }
     
     @Test
     public final void testDecodeArray() {
-        JSONDecoder decoder = 
-            new JSONDecoder("[\"key\",\"key2\"]");
+        String orig = "[\"key\",\"key2\"]";
+        JSONDecoder decoder = new JSONDecoder(orig);
         JSONValue result = decoder.decode();
-        System.out.println(result.toJSON());
+        TestCase.assertEquals(orig, result.toJSON());
     }
     
     @Test
     public final void testDecodeArrayWithObjects() {
         JSONDecoder decoder = 
-            new JSONDecoder("[\"key1\",\"key2\",{\"key3\",\"value3\"}]");
+            new JSONDecoder("[\"key1\",\"key2\",{\"key3\":\"value3\"}]");
         JSONValue result = decoder.decode();
-        System.out.println(result.toJSON());
+        TestCase.assertEquals(
+                "[\"key1\",\"key2\",{\"key3\":\"value3\"}]", 
+                result.toJSON());
     }
     
     @Test
@@ -81,6 +87,14 @@ public class JSONDecoderTest {
         JSONDecoder decoder = 
             new JSONDecoder("[\"key1\",\"key2\",12345]");
         JSONValue result = decoder.decode();
-        System.out.println(result.toJSON());
+        TestCase.assertEquals("[\"key1\",\"key2\",12345]", result.toJSON());
+    }
+    
+    @Test
+    public final void testDecodeArrayWithNumber2() {
+        JSONDecoder decoder = 
+            new JSONDecoder("[\"key1\",\"key2\",12345.56]");
+        JSONValue result = decoder.decode();
+        TestCase.assertEquals("[\"key1\",\"key2\",12345.56]", result.toJSON());
     }
 }

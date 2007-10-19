@@ -31,6 +31,20 @@ public class JSONNumber implements JSONValue {
     /**
      * @param value
      */
+    public JSONNumber(String value) {
+        this.value = value;
+    }
+    
+    /**
+     * @param value
+     */
+    public JSONNumber(long value) {
+        this.value = Long.toString(value);
+    }
+    
+    /**
+     * @param value
+     */
     public JSONNumber(float value) {
         this.value = Float.toString(value);
     }

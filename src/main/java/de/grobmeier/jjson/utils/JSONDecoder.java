@@ -15,12 +15,17 @@
  */
 package de.grobmeier.jjson.utils;
 
+import java.text.NumberFormat;
+import java.text.ParseException;
+
 import de.grobmeier.jjson.JSONArray;
+import de.grobmeier.jjson.JSONNumber;
 import de.grobmeier.jjson.JSONObject;
 import de.grobmeier.jjson.JSONString;
 import de.grobmeier.jjson.JSONValue;
 
 public class JSONDecoder {
+    private static NumberFormat numberFormat = NumberFormat.getInstance();
     private JSONReader reader = null;
     /**
      * 
@@ -31,7 +36,12 @@ public class JSONDecoder {
     
    
     enum Opener {
-        jsonobject('{'), jsonarray('['), jsonstring('"');
+        OBJECT('{'), 
+        ARRAY('['), 
+        STRING('"'), 
+        PLUS('+'),
+        MINUS('-'),
+        DOT('.');
         
         private char sign = ' ';
         
@@ -82,6 +92,18 @@ public class JSONDecoder {
         }
         
         /**
+         * 
+         */
+        public char back() {
+            if(index - 1 >= 0) {
+                index--;
+            } else {
+                index = 0;
+            }
+            return current();
+        }
+        
+        /**
          * @return
          */
         public char current() {
@@ -93,7 +115,6 @@ public class JSONDecoder {
          */
         public boolean next() {
             if(index + 1 >= json.length) {
-                index = 0;
                 return false;
             } else {
                 index++;
@@ -147,14 +168,58 @@ public class JSONDecoder {
     
     public JSONValue decode() {
         char current = reader.current();
-        if(current == Opener.jsonobject.sign) {
+        if(current == Opener.OBJECT.sign) {
             return decodeObject();
-        } else if(current == Opener.jsonstring.sign) {
+        } else if(current == Opener.STRING.sign) {
             return decodeString();
-        } else if(current == Opener.jsonarray.sign) {
+        } else if(current == Opener.ARRAY.sign) {
             return decodeArray();
+        } else if(
+            Character.isDigit(current) || 
+            current == Opener.MINUS.sign ||
+            current == Opener.PLUS.sign || 
+            current == Opener.DOT.sign) {
+            return decodeNumber();
         }
         return null;
+    }
+    
+    /**
+     * @return
+     */
+    private JSONNumber decodeNumber() {
+        StringBuffer sb = new StringBuffer();
+        sb.append(reader.current());
+        
+        while(reader.next()) {
+            char temp = reader.current();
+            // Strings cannot have a opener inside
+            if(isCloser(temp)) {
+                break;
+            } else {
+                sb.append(temp);
+            }
+        }
+
+        // Numbers have no closers, we have to point to the
+        // last digit to work correctly for any surrounding objects/arrays
+        reader.back();
+        
+        Number number = null;
+        try {
+            number = numberFormat.parse(sb.toString());
+        } catch (ParseException e) {
+            // TODO Integrate loggin
+            e.printStackTrace();
+        }
+        // parsing to make sure the string is a number
+        return new JSONNumber(number.toString());
+//        if(number.getClass().equals(Double.class)) {
+//            return new JSONNumber(number.doubleValue());
+//        } else if(number.getClass().equals(Long.class)) {
+//            return new JSONNumber(number.longValue());
+//        }
+//        return new JSONNumber(0);
     }
     
     /**
@@ -213,7 +278,7 @@ public class JSONDecoder {
      */
     private JSONString decodeString() {
         StringBuilder result = new StringBuilder();
-        if(reader.current() == Opener.jsonstring.sign) {
+        if(reader.current() == Opener.STRING.sign) {
             while(reader.next()) {
                 char temp = reader.current();
                 // Strings cannot have a opener inside
