@@ -41,7 +41,9 @@ public class JSONDecoder {
         reader = new JSONReader(json);
     }
     
-   
+    /**
+     * Special chars which open a type
+     */
     enum Opener {
         OBJECT('{'), 
         ARRAY('['), 
@@ -57,6 +59,9 @@ public class JSONDecoder {
         }
     }
     
+    /**
+     * Special chars which close a type
+     */
     enum Closer {
         jsonobject('}'), jsonarray(']'), jsonstring('"');
         
@@ -68,20 +73,25 @@ public class JSONDecoder {
     }
 
     /**
-     * 
+     * JSONReader is a helper class to navigate 
+     * through the input json string. 
      */
     private class JSONReader {
+        /* chararray of the original jsonstring */
         private char[] json = null;
+        /* pointer to the chararray */
         private int index = 0;
         /**
-         * @param _json
+         * Constructor. Needs the orignal JSON-String
+         * to navigate onto it.
+         * @param _json the original JSON-String
          */
         public JSONReader(final String _json) {
             json = _json.trim().toCharArray();
         }
         
         /**
-         * Reads one character and points to the next sign.
+         * Reads one character and then points to the next sign.
          * @return the read character
          */
         public char read() {
@@ -99,7 +109,9 @@ public class JSONDecoder {
         }
         
         /**
-         * 
+         * Moves the the cursor back one sign 
+         * or does nothing, if it is the first sign.
+         * @return the current char after the operation
          */
         public char back() {
             if(index - 1 >= 0) {
@@ -111,14 +123,18 @@ public class JSONDecoder {
         }
         
         /**
-         * @return
+         * Reads the current char without moving the cursor
+         * @return the current char
          */
         public char current() {
             return json[index];
         }
         
         /**
-         * @return
+         * Brings the pointer to the next position in the
+         * array. 
+         * @return false, if the pointer is allready at the last char and
+         * cannot be moved. True, if the the operation is successfull.
          */
         public boolean next() {
             if(index + 1 >= json.length) {
@@ -129,7 +145,10 @@ public class JSONDecoder {
             }
         }
         /**
-         * @return
+         * Reads the sign before the current postion without
+         * moving the pointer. Returns a blank char if the 
+         * cursor is on the first position
+         * @return the sign before the pointers position
          */
         public char readBefore() {
             if(index - 1 >= 0 && index < json.length) {
