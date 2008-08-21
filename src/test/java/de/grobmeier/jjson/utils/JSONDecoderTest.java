@@ -121,6 +121,16 @@ public class JSONDecoderTest {
     }
     
     @Test
+    public final void testDecodeObject4() {
+        JSONDecoder decoder = 
+            new JSONDecoder("{\"key\":\"value\",\"key2\":{\"key3\":\"value2\"},\"key5\":true}");
+        JSONValue result = decoder.decode();
+        TestCase.assertEquals(
+                "{\"key5\":true,\"key2\":{\"key3\":\"value2\"},\"key\":\"value\"}", 
+                result.toJSON());
+    }
+    
+    @Test
     public final void testDecodeArray() {
         String orig = "[\"key\",\"key2\"]";
         JSONDecoder decoder = new JSONDecoder(orig);
