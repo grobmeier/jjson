@@ -59,6 +59,15 @@ public class JSONNumber implements JSONValue {
     public JSONNumber(int value) {
         this.value = Integer.toString(value);
     }
+    
+    
+    /**
+     * @return the value
+     */
+    public String getValue() {
+        return value;
+    }
+
     /**
      * (non-Javadoc)
      * @see org.apache.commons.json.JSONValue#toJSON()

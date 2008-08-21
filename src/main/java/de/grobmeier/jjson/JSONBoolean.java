@@ -25,6 +25,13 @@ public class JSONBoolean implements JSONValue {
     private boolean value = false;
     
     /**
+     * @return the value
+     */
+    public boolean getValue() {
+        return value;
+    }
+
+    /**
      * @param value
      */
     public JSONBoolean(boolean value) {

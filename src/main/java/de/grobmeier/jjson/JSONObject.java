@@ -41,6 +41,13 @@ public class JSONObject implements JSONValue {
         object.put(key, value);
     }
     
+    /**
+     * @return the object
+     */
+    public Map<String, JSONValue> getValue() {
+        return object;
+    }
+
     public String toJSON() {
         StringBuffer buffer = new StringBuffer();
         buffer.append("{");

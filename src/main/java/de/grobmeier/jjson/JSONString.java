@@ -35,6 +35,13 @@ public class JSONString implements JSONValue {
     }
     
     /**
+     * @return the buffer
+     */
+    public StringBuffer getValue() {
+        return buffer;
+    }
+
+    /**
      * (non-Javadoc)
      * @see org.apache.commons.json.JSONValue#toJSON()
      */

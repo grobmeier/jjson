@@ -38,6 +38,20 @@ public class JSONArray implements JSONValue {
     }
     
     /**
+     * @return the values
+     */
+    public List<JSONValue> getValue() {
+        return values;
+    }
+
+    /**
+     * @param values the values to set
+     */
+    public void setValues(List<JSONValue> values) {
+        this.values = values;
+    }
+
+    /**
      * (non-Javadoc)
      * @see org.apache.commons.json.JSONValue#toJSON()
      */
