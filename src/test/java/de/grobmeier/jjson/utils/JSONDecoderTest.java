@@ -22,7 +22,63 @@ import org.junit.Test;
 import de.grobmeier.jjson.JSONValue;
 
 public class JSONDecoderTest {
-
+    @Test
+    public final void testDecodeBoolean() {
+        JSONDecoder decoder = 
+            new JSONDecoder("[null,true,12]");
+        JSONValue result = decoder.decode();
+        TestCase.assertEquals("[null,true,12]", result.toJSON());
+    }
+    
+    @Test
+    public final void testDecodeBoolean2() {
+        JSONDecoder decoder = 
+            new JSONDecoder("[null,false,12]");
+        JSONValue result = decoder.decode();
+        TestCase.assertEquals("[null,false,12]", result.toJSON());
+    }
+    
+    @Test
+    public final void testDecodeBoolean3() {
+        JSONDecoder decoder = 
+            new JSONDecoder("[null,true,12,false,\"BLA\"]");
+        JSONValue result = decoder.decode();
+        TestCase.assertEquals("[null,true,12,false,\"BLA\"]", result.toJSON());
+    }
+    
+    @Test
+    public final void testDecodeNull4() {
+        JSONDecoder decoder = 
+            new JSONDecoder("[null,12]");
+        JSONValue result = decoder.decode();
+        TestCase.assertEquals("[null,12]", result.toJSON());
+    }
+    
+    @Test
+    public final void testDecodeNull() {
+        JSONDecoder decoder = 
+            new JSONDecoder("[null]");
+        JSONValue result = decoder.decode();
+        TestCase.assertEquals("[null]", result.toJSON());
+    }
+    
+    @Test
+    public final void testDecodeNull2() {
+        JSONDecoder decoder = 
+            new JSONDecoder("null");
+        JSONValue result = decoder.decode();
+        TestCase.assertEquals("null", result.toJSON());
+    }
+    
+    
+    @Test
+    public final void testDecodeNull3() {
+        JSONDecoder decoder = 
+            new JSONDecoder("[null,null]");
+        JSONValue result = decoder.decode();
+        TestCase.assertEquals("[null,null]", result.toJSON());
+    }
+    
     @Test
     public final void testDecodeSimpleString() {
         JSONDecoder decoder = new JSONDecoder("\"hello\"");
@@ -50,7 +106,7 @@ public class JSONDecoderTest {
             new JSONDecoder("{\"key\":\"value\",\"key2\":\"value2\"}");
         JSONValue result = decoder.decode();
         TestCase.assertEquals(
-                "{\"key\":\"value\",\"key2\":\"value2\"}", 
+                "{\"key2\":\"value2\",\"key\":\"value\"}", 
                 result.toJSON());
     }
     
@@ -60,7 +116,7 @@ public class JSONDecoderTest {
             new JSONDecoder("{\"key\":\"value\",\"key2\":{\"key3\":\"value2\"}}");
         JSONValue result = decoder.decode();
         TestCase.assertEquals(
-                "{\"key\":\"value\",\"key2\":{\"key3\":\"value2\"}}", 
+                "{\"key2\":{\"key3\":\"value2\"},\"key\":\"value\"}", 
                 result.toJSON());
     }
     
@@ -112,5 +168,29 @@ public class JSONDecoderTest {
             new JSONDecoder("[\"key1\",\"key2\",-12345.56]");
         JSONValue result = decoder.decode();
         TestCase.assertEquals("[\"key1\",\"key2\",-12345.56]", result.toJSON());
+    }
+    
+    @Test
+    public final void testDecodeArrayWithNumber5() {
+        JSONDecoder decoder = 
+            new JSONDecoder("[null,12,15]");
+        JSONValue result = decoder.decode();
+        TestCase.assertEquals("[null,12,15]", result.toJSON());
+    }
+    
+    @Test
+    public final void testDecodeArrayWithNumber6() {
+        JSONDecoder decoder = 
+            new JSONDecoder("[\"key1\",\"key2\",-12345.56,\"bla\"]");
+        JSONValue result = decoder.decode();
+        TestCase.assertEquals("[\"key1\",\"key2\",-12345.56,\"bla\"]", result.toJSON());
+    }
+    
+    @Test
+    public final void testDecodeArrayWithNumber7() {
+        JSONDecoder decoder = 
+            new JSONDecoder("[\"key1\",\"key2\",-12345.56,\"bla\",null]");
+        JSONValue result = decoder.decode();
+        TestCase.assertEquals("[\"key1\",\"key2\",-12345.56,\"bla\",null]", result.toJSON());
     }
 }

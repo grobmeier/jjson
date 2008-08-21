@@ -20,6 +20,8 @@ import java.text.ParseException;
 import java.util.Locale;
 
 import de.grobmeier.jjson.JSONArray;
+import de.grobmeier.jjson.JSONBoolean;
+import de.grobmeier.jjson.JSONNull;
 import de.grobmeier.jjson.JSONNumber;
 import de.grobmeier.jjson.JSONObject;
 import de.grobmeier.jjson.JSONString;
@@ -50,7 +52,13 @@ public class JSONDecoder {
         STRING('"'), 
         PLUS('+'),
         MINUS('-'),
-        DOT('.');
+        DOT('.'),
+        NULL('n'),
+        NULL_UPPER('N'),
+        TRUE('t'),
+        TRUE_UPPER('T'),
+        FALSE('f'),
+        FALSE_UPPER('F');
         
         private char sign = ' ';
         
@@ -194,6 +202,7 @@ public class JSONDecoder {
     
     public JSONValue decode() {
         char current = reader.current();
+        
         if(current == Opener.OBJECT.sign) {
             return decodeObject();
         } else if(current == Opener.STRING.sign) {
@@ -206,8 +215,83 @@ public class JSONDecoder {
             current == Opener.PLUS.sign || 
             current == Opener.DOT.sign) {
             return decodeNumber();
+        } else if(
+            current == Opener.NULL.sign ||
+            current == Opener.NULL_UPPER.sign) {
+            return decodeNull();
+        } else if(
+            current == Opener.FALSE.sign ||
+            current == Opener.FALSE_UPPER.sign) {
+            return decodeFalse();
+        }  else if(
+            current == Opener.TRUE.sign ||
+            current == Opener.TRUE_UPPER.sign) {
+            return decodeTrue();
         }
         return null;
+    }
+    
+    /**
+     * @return
+     */
+    private JSONBoolean decodeTrue() {
+        StringBuffer sb = new StringBuffer();
+        sb.append(reader.current());
+        int i = 1;
+        while(i < 4) {
+            reader.next();
+            char temp = reader.current();
+            sb.append(temp);
+            i++;
+        }
+
+        // sanity check
+        if(!"TRUE".equalsIgnoreCase(sb.toString())) {
+            System.err.print("JSON expected true value, was: " + sb.toString());
+        }
+        return new JSONBoolean(true);
+    }
+    
+    /**
+     * @return
+     */
+    private JSONBoolean decodeFalse() {
+        StringBuffer sb = new StringBuffer();
+        sb.append(reader.current());
+        int i = 1;
+        while(i < 5) {
+            reader.next();
+            char temp = reader.current();
+            sb.append(temp);
+            i++;
+        }
+
+        // sanity check
+        if(!"FALSE".equalsIgnoreCase(sb.toString())) {
+            System.err.print("JSON expected true value, was: " + sb.toString());
+        }
+        return new JSONBoolean(false);
+    }
+    
+    /**
+     * @return
+     */
+    private JSONNull decodeNull() {
+        StringBuffer sb = new StringBuffer();
+        sb.append(reader.current());
+        int i = 1;
+        while(i < 4) {
+            reader.next();
+            char temp = reader.current();
+            sb.append(temp);
+            i++;
+        }
+
+        // sanity check
+        if(!"NULL".equalsIgnoreCase(sb.toString())) {
+            System.err.print("JSON expected null value, was: " + sb.toString());
+        }
+        return new JSONNull();
     }
     
     /**
@@ -222,7 +306,7 @@ public class JSONDecoder {
         while(reader.next()) {
             char temp = reader.current();
             // Strings cannot have a opener inside
-            if(isCloser(temp)) {
+            if(isCloser(temp) || temp == ',') {
                 break;
             } else {
                 sb.append(temp);
