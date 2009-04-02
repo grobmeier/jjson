@@ -15,15 +15,24 @@
  */
 package de.grobmeier.jjson.utils;
 
+import junit.framework.TestCase;
+
 import org.junit.Test;
 
 
 public class JSONAnnotationEncoderTest {
     @Test
     public void testSimpleClass() throws Exception {
+    	String expected = 
+    		"{\"value1\":1,\"value2\":\"blub\",\"value3\":2,\"value5\":3,\"value4\":" +
+    		"\"fasel\",\"intArray\":,\"value6\":true,\"value7\":false,\"test\":" +
+    		"{\"mys\":\"bla\",\"mylist\":[\"entry1\",\"entry2\",\"entry3\",\"entry4\",\"entry5\"]," +
+    		"\"map\":{\"key1\":{\"innerfield\":\"innerfield_1\"}," +
+    		"\"key3\":{\"innerfield\":\"innerfield_3\"}," +
+    		"\"key2\":{\"innerfield\":\"innerfield_2\"}}}}";
         AnnotatedTestClass c = new AnnotatedTestClass();
         JSONAnnotationEncoder encoder = new JSONAnnotationEncoder();
         String json = encoder.encode(c);
-        System.out.println("RESULT: " +json);
+        TestCase.assertEquals(expected, json);
     }
 }
