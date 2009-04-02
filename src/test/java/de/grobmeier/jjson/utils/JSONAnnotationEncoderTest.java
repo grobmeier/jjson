@@ -23,7 +23,7 @@ public class JSONAnnotationEncoderTest {
     public void testSimpleClass() throws Exception {
         AnnotatedTestClass c = new AnnotatedTestClass();
         JSONAnnotationEncoder encoder = new JSONAnnotationEncoder();
-        String json = encoder.encodeObject(c);
+        String json = encoder.encode(c);
         System.out.println("RESULT: " +json);
     }
 }

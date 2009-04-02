@@ -33,18 +33,44 @@ public class JSONAnnotationEncoder {
     private final static char[] get = {'g','e','t'};
     private final static char[] is = {'i','s'};
     
-    public String encodeObject(Object c) throws JSONException {
+    public String encode(Object result) throws JSONException {
+       StringBuilder builder = new StringBuilder();
+       encode(result, builder);
+       return builder.toString();
+    }
+    
+    /**
+     * @param builder
+     * @param result
+     * @throws JSONException
+     */
+    public void encode(Object result, StringBuilder builder) throws JSONException {
+        if(result.getClass().isAssignableFrom(String.class)) {
+            encodeString(((String)result), builder);
+        } else if(result.getClass().isAssignableFrom(Integer.class)) {
+            encodeInteger((Integer)result, builder);
+        } else if(result.getClass().isAssignableFrom(Boolean.class)) {
+            encodeBoolean((Boolean)result, builder);
+        } else if(result.getClass().isAssignableFrom(List.class)) {
+            builder.append("null");
+        } else if(result.getClass().isAssignableFrom(Map.class)) {
+            builder.append("null");
+        } else {
+            encodeObject(result, builder);
+        }
+    }
+    
+    private String encodeObject(Object c, StringBuilder builder) throws JSONException {
         if(c.getClass().getAnnotation(JSONObject.class) == null) {
             return null;
         }
         
         if(c == null) {
-            return "{}";
+            return "null";
         }
         
         boolean first = true;
         
-        StringBuilder builder = new StringBuilder();
         builder.append("{");
         
         Field[] fields = c.getClass().getDeclaredFields();
@@ -61,27 +87,22 @@ public class JSONAnnotationEncoder {
                     String methodName = null;
                     // primitive boolean getters have is as prefix
                     if("boolean".equals(field.getType().toString())) {
-                        methodName = createIs(field.getName());
+                        methodName = createGetter(field.getName(), is);
                     } else {
-                        methodName = createGetter(field.getName());
+                        methodName = createGetter(field.getName(), get);
                     }
 
                     try {
                         Method method = c.getClass().getMethod(methodName, (Class[])null);
-                        if(method == null) {
-                            
-                        }
-                        
                         Object result = method.invoke(c, (Object[])null);
                         
                         encodeString(field.getName(), builder);
                         builder.append(":");
-                        
-                        encode(builder, result);
+                        encode(result, builder);
                     } catch (SecurityException e) {
                         throw new JSONException(e);
                     } catch (NoSuchMethodException e) {
-                        throw new JSONException(e);
+                        throw new JSONException("No appropriate getter found: " + methodName ,e);
                     } catch (IllegalArgumentException e) {
                         throw new JSONException(e);
                     } catch (IllegalAccessException e) {
@@ -96,62 +117,43 @@ public class JSONAnnotationEncoder {
         return builder.toString();
     }
 
-    /**
-     * @param builder
-     * @param result
-     * @throws JSONException
-     */
-    private void encode(StringBuilder builder, Object result) throws JSONException {
-        if(result.getClass().isAssignableFrom(String.class)) {
-            encodeString(((String)result), builder);
-        } else if(result.getClass().isAssignableFrom(Integer.class)) {
-            encodeInteger((Integer)result, builder);
-        } else if(result.getClass().isAssignableFrom(Boolean.class)) {
-            encodeBoolean((Boolean)result, builder);
-        } else if(result.getClass().isAssignableFrom(List.class)) {
-            builder.append("null");
-        } else if(result.getClass().isAssignableFrom(Map.class)) {
-            builder.append("null");
+    private void encodeString(String string, StringBuilder result) {
+    	if(string == null) {
+            result.append("null");
         } else {
-            builder.append(encodeObject(result));
+        	result.append("\"");
+        	result.append(string);
+        	result.append("\"");
         }
     }
 
-    private void encodeString(String string, StringBuilder result) {
-        result.append("\"");
-        result.append(string);
-        result.append("\"");
-    }
-
     private void encodeInteger(Integer integer, StringBuilder result) {
-        result.append("");
-        result.append(integer);
-        result.append("");
+    	if(integer == null) {
+            result.append("null");
+        } else {
+	    	result.append("");
+	        result.append(integer);
+	        result.append("");
+        }
     }
     
     private void encodeBoolean(Boolean b, StringBuilder result) {
-        result.append("");
-        result.append(Boolean.toString(b));
-        result.append("");
+    	if(b == null) {
+            result.append("null");
+    	} else {
+	        result.append("");
+	        result.append(Boolean.toString(b));
+	        result.append("");
+    	}
     }
     
-    private String createGetter(String fieldname) {
+    private String createGetter(String fieldname, char[] prefix) {
         char[] chars = fieldname.toCharArray();
         chars[0] = Character.toUpperCase(chars[0]); 
         
-        char[] result = new char[get.length + chars.length];
-        System.arraycopy(get, 0, result, 0, get.length);
-        System.arraycopy(chars, 0, result, get.length, chars.length);
-        return String.valueOf(result);
-    }
-    
-    private String createIs(String fieldname) {
-        char[] chars = fieldname.toCharArray();
-        chars[0] = Character.toUpperCase(chars[0]); 
-        
-        char[] result = new char[is.length + chars.length];
-        System.arraycopy(is, 0, result, 0, is.length);
-        System.arraycopy(chars, 0, result, is.length, chars.length);
+        char[] result = new char[prefix.length + chars.length];
+        System.arraycopy(prefix, 0, result, 0, prefix.length);
+        System.arraycopy(chars, 0, result, prefix.length, chars.length);
         return String.valueOf(result);
     }
 }
