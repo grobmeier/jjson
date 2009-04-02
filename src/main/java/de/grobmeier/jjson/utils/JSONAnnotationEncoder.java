@@ -22,6 +22,8 @@ import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.Map.Entry;
 
 import de.grobmeier.jjson.JSONException;
 import de.grobmeier.jjson.annotations.JSONField;
@@ -57,11 +59,29 @@ public class JSONAnnotationEncoder {
             encodeBoolean((Boolean)result, builder);
         } else if(hasInterface(result, List.class)) {
         	encodeList((List<Object>)result, builder);
-        } else if(result.getClass().isAssignableFrom(Map.class)) {
-            builder.append(NULL);
+        } else if(hasInterface(result, Map.class)) {
+        	encodeMap((Map<Object, Object>)result, builder);
         } else {
             encodeObject(result, builder);
         }
+    }
+    
+    private void encodeMap(Map<Object, Object> result, StringBuilder builder) throws JSONException {
+    	boolean first = true;
+    	builder.append("{");
+    	Set<Entry<Object, Object>> entries = result.entrySet();
+    	for (Iterator<Entry<Object, Object>> iterator = entries.iterator(); iterator.hasNext();) {
+    		if(!first) {
+                builder.append(",");
+            } else {
+                first = false;
+            }
+			Entry<Object, Object> entry = (Entry<Object, Object>) iterator.next();
+			encodeString(entry.getKey().toString(), builder);
+			builder.append(":");
+			encode(entry.getValue(), builder);
+		}
+    	builder.append("}");
     }
     
     private void encodeList(List<Object> result, StringBuilder builder) throws JSONException {
