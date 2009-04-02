@@ -33,9 +33,22 @@ import de.grobmeier.jjson.annotations.JSONObject;
  * 
  */
 public class JSONAnnotationEncoder {
-    private final static char[] get = {'g','e','t'};
+	// Key signs
+    private static final String QUOTE = "\"";
+	private static final String PRIMITIVE_BOOLEAN = "boolean";
+	private static final String ARRAY_RIGHT = "]";
+	private static final String ARRAY_LEFT = "[";
+	private static final String BRACKET_RIGHT = "}";
+	private static final String COLON = ":";
+	private static final String COMMA = ",";
+	private static final String EMTPY_STRING = "";
+	private static final String BRACKET_LEFT = "{";
+
+	// Getter prefix
+	private final static char[] get = {'g','e','t'};
     private final static char[] is = {'i','s'};
     
+    // Special values
     private final static String NULL = "null";
     
     public String encode(Object result) throws JSONException {
@@ -68,28 +81,28 @@ public class JSONAnnotationEncoder {
     
     private void encodeMap(Map<Object, Object> result, StringBuilder builder) throws JSONException {
     	boolean first = true;
-    	builder.append("{");
+    	builder.append(BRACKET_LEFT);
     	Set<Entry<Object, Object>> entries = result.entrySet();
     	for (Iterator<Entry<Object, Object>> iterator = entries.iterator(); iterator.hasNext();) {
     		if(!first) {
-                builder.append(",");
+                builder.append(COMMA);
             } else {
                 first = false;
             }
 			Entry<Object, Object> entry = (Entry<Object, Object>) iterator.next();
 			encodeString(entry.getKey().toString(), builder);
-			builder.append(":");
+			builder.append(COLON);
 			encode(entry.getValue(), builder);
 		}
-    	builder.append("}");
+    	builder.append(BRACKET_RIGHT);
     }
     
     private void encodeList(List<Object> result, StringBuilder builder) throws JSONException {
     	boolean first = true;
-    	builder.append("[");
+    	builder.append(ARRAY_LEFT);
     	for (Iterator<Object> iterator = result.iterator(); iterator.hasNext();) {
     		 if(!first) {
-                 builder.append(",");
+                 builder.append(COMMA);
              } else {
                  first = false;
              }
@@ -97,7 +110,7 @@ public class JSONAnnotationEncoder {
 			Object object = iterator.next();
 			encode(object, builder);
 		}
-    	builder.append("]");
+    	builder.append(ARRAY_RIGHT);
 	}
 
 	private String encodeObject(Object c, StringBuilder builder) throws JSONException {
@@ -111,7 +124,7 @@ public class JSONAnnotationEncoder {
         
         boolean first = true;
         
-        builder.append("{");
+        builder.append(BRACKET_LEFT);
         
         Field[] fields = c.getClass().getDeclaredFields();
         for (Field field : fields) {
@@ -119,14 +132,14 @@ public class JSONAnnotationEncoder {
             for (Annotation annotation : anons) {
                 if(annotation.annotationType().isAssignableFrom(JSONField.class)) {
                     if(!first) {
-                        builder.append(",");
+                        builder.append(COMMA);
                     } else {
                         first = false;
                     }
                     
                     String methodName = null;
                     // primitive boolean getters have «is« as prefix
-                    if("boolean".equals(field.getType().toString())) {
+                    if(PRIMITIVE_BOOLEAN.equals(field.getType().toString())) {
                         methodName = createGetter(field.getName(), is);
                     } else {
                         methodName = createGetter(field.getName(), get);
@@ -137,7 +150,7 @@ public class JSONAnnotationEncoder {
                         Object result = method.invoke(c, (Object[])null);
                         
                         encodeString(field.getName(), builder);
-                        builder.append(":");
+                        builder.append(COLON);
                         encode(result, builder);
                     } catch (SecurityException e) {
                         throw new JSONException(e);
@@ -153,7 +166,7 @@ public class JSONAnnotationEncoder {
                 }
             }
         }
-        builder.append("}");
+        builder.append(BRACKET_RIGHT);
         return builder.toString();
     }
 
@@ -161,9 +174,9 @@ public class JSONAnnotationEncoder {
     	if(string == null) {
             result.append(NULL);
         } else {
-        	result.append("\"");
+        	result.append(QUOTE);
         	result.append(string);
-        	result.append("\"");
+        	result.append(QUOTE);
         }
     }
 
@@ -171,9 +184,9 @@ public class JSONAnnotationEncoder {
     	if(integer == null) {
             result.append(NULL);
         } else {
-	    	result.append("");
+			result.append(EMTPY_STRING);
 	        result.append(integer);
-	        result.append("");
+	        result.append(EMTPY_STRING);
         }
     }
     
@@ -181,9 +194,9 @@ public class JSONAnnotationEncoder {
     	if(b == null) {
             result.append(NULL);
     	} else {
-	        result.append("");
+	        result.append(EMTPY_STRING);
 	        result.append(Boolean.toString(b));
-	        result.append("");
+	        result.append(EMTPY_STRING);
     	}
     }
     
