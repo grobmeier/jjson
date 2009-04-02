@@ -138,7 +138,7 @@ public class JSONAnnotationEncoder {
                     }
                     
                     String methodName = null;
-                    // primitive boolean getters have «is« as prefix
+                    // primitive boolean getters have is as prefix
                     if(PRIMITIVE_BOOLEAN.equals(field.getType().toString())) {
                         methodName = createGetter(field.getName(), is);
                     } else {
