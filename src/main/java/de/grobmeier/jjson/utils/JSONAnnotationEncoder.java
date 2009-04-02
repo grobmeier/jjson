@@ -19,6 +19,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -46,15 +47,16 @@ public class JSONAnnotationEncoder {
      * @param result
      * @throws JSONException
      */
-    public void encode(Object result, StringBuilder builder) throws JSONException {
+    @SuppressWarnings("unchecked")
+	public void encode(Object result, StringBuilder builder) throws JSONException {
         if(result.getClass().isAssignableFrom(String.class)) {
             encodeString(((String)result), builder);
         } else if(result.getClass().isAssignableFrom(Integer.class)) {
             encodeInteger((Integer)result, builder);
         } else if(result.getClass().isAssignableFrom(Boolean.class)) {
             encodeBoolean((Boolean)result, builder);
-        } else if(result.getClass().isAssignableFrom(List.class)) {
-            builder.append(NULL);
+        } else if(hasInterface(result, List.class)) {
+        	encodeList((List<Object>)result, builder);
         } else if(result.getClass().isAssignableFrom(Map.class)) {
             builder.append(NULL);
         } else {
@@ -62,7 +64,23 @@ public class JSONAnnotationEncoder {
         }
     }
     
-    private String encodeObject(Object c, StringBuilder builder) throws JSONException {
+    private void encodeList(List<Object> result, StringBuilder builder) throws JSONException {
+    	boolean first = true;
+    	builder.append("[");
+    	for (Iterator<Object> iterator = result.iterator(); iterator.hasNext();) {
+    		 if(!first) {
+                 builder.append(",");
+             } else {
+                 first = false;
+             }
+    		 
+			Object object = iterator.next();
+			encode(object, builder);
+		}
+    	builder.append("]");
+	}
+
+	private String encodeObject(Object c, StringBuilder builder) throws JSONException {
         if(c.getClass().getAnnotation(JSONObject.class) == null) {
             return null;
         }
@@ -87,7 +105,7 @@ public class JSONAnnotationEncoder {
                     }
                     
                     String methodName = null;
-                    // primitive boolean getters have is as prefix
+                    // primitive boolean getters have «is« as prefix
                     if("boolean".equals(field.getType().toString())) {
                         methodName = createGetter(field.getName(), is);
                     } else {
@@ -149,10 +167,20 @@ public class JSONAnnotationEncoder {
     	}
     }
     
+    @SuppressWarnings("unchecked")
+	private boolean hasInterface(Object target, Class interfaceClass) {
+		Class[] interfaces = target.getClass().getInterfaces();
+		for (int i = 0; i < interfaces.length; i++) {
+			if(interfaceClass.getName().equals(interfaces[i].getName())) {
+				return true;
+			}
+		}
+		return false;
+    }
+    
     private String createGetter(String fieldname, char[] prefix) {
         char[] chars = fieldname.toCharArray();
         chars[0] = Character.toUpperCase(chars[0]); 
-        
         char[] result = new char[prefix.length + chars.length];
         System.arraycopy(prefix, 0, result, 0, prefix.length);
         System.arraycopy(chars, 0, result, prefix.length, chars.length);
