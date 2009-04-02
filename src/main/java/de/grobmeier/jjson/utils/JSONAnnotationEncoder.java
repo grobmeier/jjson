@@ -33,6 +33,8 @@ public class JSONAnnotationEncoder {
     private final static char[] get = {'g','e','t'};
     private final static char[] is = {'i','s'};
     
+    private final static String NULL = "null";
+    
     public String encode(Object result) throws JSONException {
        StringBuilder builder = new StringBuilder();
        encode(result, builder);
@@ -52,9 +54,9 @@ public class JSONAnnotationEncoder {
         } else if(result.getClass().isAssignableFrom(Boolean.class)) {
             encodeBoolean((Boolean)result, builder);
         } else if(result.getClass().isAssignableFrom(List.class)) {
-            builder.append("null");
+            builder.append(NULL);
         } else if(result.getClass().isAssignableFrom(Map.class)) {
-            builder.append("null");
+            builder.append(NULL);
         } else {
             encodeObject(result, builder);
         }
@@ -66,7 +68,7 @@ public class JSONAnnotationEncoder {
         }
         
         if(c == null) {
-            return "null";
+            return NULL;
         }
         
         boolean first = true;
@@ -119,7 +121,7 @@ public class JSONAnnotationEncoder {
 
     private void encodeString(String string, StringBuilder result) {
     	if(string == null) {
-            result.append("null");
+            result.append(NULL);
         } else {
         	result.append("\"");
         	result.append(string);
@@ -129,7 +131,7 @@ public class JSONAnnotationEncoder {
 
     private void encodeInteger(Integer integer, StringBuilder result) {
     	if(integer == null) {
-            result.append("null");
+            result.append(NULL);
         } else {
 	    	result.append("");
 	        result.append(integer);
@@ -139,7 +141,7 @@ public class JSONAnnotationEncoder {
     
     private void encodeBoolean(Boolean b, StringBuilder result) {
     	if(b == null) {
-            result.append("null");
+            result.append(NULL);
     	} else {
 	        result.append("");
 	        result.append(Boolean.toString(b));
