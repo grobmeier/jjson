@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     jjson    
+     This builds the jjson project
+     ====================================================================== -->
+<project name="jjson" default="jar">
+	<description>
+            This builds the jjson project
+    </description>
+
+	<!-- ================================= 
+          target: jar              
+         ================================= -->
+	<target name="jar" depends="init, compile" description="This builds the jjson project">
+		<jar destfile="target/jjson-0.0.3_jre15.jar">
+			<fileset dir="target/classes15" />
+			<fileset dir=".">
+				<include name="LICENSE.txt"/>
+				<include name="NOTICE.txt"/>
+			</fileset>
+		</jar>
+		<antcall target="cleanup" />
+	</target>
+
+	<!-- ================================= 
+          target: compile              
+         ================================= -->
+	<target name="compile" depends="init" description="This compiles the jjson project">
+		<javac srcdir="src/main/java" destdir="target/classes15" source="1.5" target="1.5"/>
+	</target>
+
+
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: init                      
+         - - - - - - - - - - - - - - - - - -->
+	<target name="init">
+		<mkdir dir="target" />
+		<mkdir dir="target/classes15" />
+	</target>
+
+	<!-- - - - - - - - - - - - - - - - - - 
+          target: cleanup                      
+         - - - - - - - - - - - - - - - - - -->
+	<target name="cleanup">
+		<delete dir="target/classes15" />
+	</target>
+
+
+</project>

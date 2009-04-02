@@ -20,6 +20,12 @@
 			</roles>
 		</developer>
 	</developers>
+	<contributors>
+	   <contributor>
+	       <name>Hugh Reid</name>
+	       <url>http://code.google.com/u/reid.hugh/</url>
+	   </contributor>
+	</contributors>
 	<build>
 		<plugins>
 			<plugin>
