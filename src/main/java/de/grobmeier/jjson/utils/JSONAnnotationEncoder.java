@@ -34,6 +34,7 @@ import de.grobmeier.jjson.annotations.JSONObject;
  */
 public class JSONAnnotationEncoder {
 	// Key signs
+    // TODO: use allready defined Openener/Closer Enums from basic decoder
     private static final String QUOTE = "\"";
 	private static final String PRIMITIVE_BOOLEAN = "boolean";
 	private static final String ARRAY_RIGHT = "]";
@@ -135,6 +136,7 @@ public class JSONAnnotationEncoder {
                     
                     String methodName = null;
                     // primitive boolean getters have is as prefix
+                    // Use class.getComponentType instead of this
                     if(PRIMITIVE_BOOLEAN.equals(field.getType().toString())) {
                         methodName = JSONReflectionUtils.createGetter(field.getName(), JSONReflectionUtils.IS);
                     } else {
