@@ -28,9 +28,9 @@ public class JSONAnnotationDecoder {
         try {
             result = t.newInstance();
         } catch (InstantiationException e) {
-            e.printStackTrace();
+            throw new JSONException("Could not instantiate class: " + t, e);
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            throw new JSONException("Could not access class: " + t, e);
         }
 
         putObject(result, source);
@@ -40,7 +40,7 @@ public class JSONAnnotationDecoder {
     private void putObject(Object target, JSONObject source) throws JSONException {
         Map<String, JSONValue> values = source.getValue();
         Set<Entry<String, JSONValue>> set = values.entrySet();
-System.out.println(source.toJSON());
+
         for (Entry<String, JSONValue> entry : set) {
             System.out.println(entry.getKey());
             JSONValue v = entry.getValue();
