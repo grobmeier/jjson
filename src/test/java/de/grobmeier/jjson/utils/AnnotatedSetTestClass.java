@@ -14,6 +14,9 @@ public class AnnotatedSetTestClass {
     @JSONField
     private Boolean test3 = false;
     
+    @JSONField
+    private AnnotatedNestedSetClass nested = null;
+    
     
     /**
      * @return the test1
@@ -55,6 +58,20 @@ public class AnnotatedSetTestClass {
      */
     public void setTest3(Boolean test3) {
         this.test3 = test3;
+    }
+
+    /**
+     * @return the nested
+     */
+    public AnnotatedNestedSetClass getNested() {
+        return nested;
+    }
+
+    /**
+     * @param nested the nested to set
+     */
+    public void setNested(AnnotatedNestedSetClass nested) {
+        this.nested = nested;
     }
     
     

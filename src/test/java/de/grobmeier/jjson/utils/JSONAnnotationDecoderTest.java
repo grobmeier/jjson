@@ -12,10 +12,12 @@ public class JSONAnnotationDecoderTest {
         JSONAnnotationDecoder decoder = new JSONAnnotationDecoder();
         AnnotatedSetTestClass result = 
             decoder.decode(AnnotatedSetTestClass.class, 
-                    "{\"test1\":\"mytestvalue\",\"test2\":true,\"test3\":true}");
+                    "{\"test1\":\"mytestvalue\",\"test2\":true,\"test3\":true," +
+                    "\"nested\":{\"mystring\":\"blubber\"}}");
         Assert.assertEquals("mytestvalue",result.getTest1());
         Assert.assertEquals(true,result.isTest2());
         Assert.assertEquals(Boolean.TRUE,result.getTest3());
+        Assert.assertEquals("blubber",result.getNested().getMystring());
     }
 
 }
