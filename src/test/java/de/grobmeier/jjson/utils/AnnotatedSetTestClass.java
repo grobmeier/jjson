@@ -1,5 +1,7 @@
 package de.grobmeier.jjson.utils;
 
+import java.util.List;
+
 import de.grobmeier.jjson.annotations.JSONField;
 import de.grobmeier.jjson.annotations.JSONObject;
 
@@ -17,6 +19,11 @@ public class AnnotatedSetTestClass {
     @JSONField
     private AnnotatedNestedSetClass nested = null;
     
+    @JSONField 
+    private List<String> nestedStringList = null;
+    
+    @JSONField
+    private String[] primitiveString = null;
     
     /**
      * @return the test1
@@ -73,6 +80,32 @@ public class AnnotatedSetTestClass {
     public void setNested(AnnotatedNestedSetClass nested) {
         this.nested = nested;
     }
-    
-    
+
+    /**
+     * @return the nestedStringList
+     */
+    public List<String> getNestedStringList() {
+        return nestedStringList;
+    }
+
+    /**
+     * @param nestedStringList the nestedStringList to set
+     */
+    public void setNestedStringList(List<String> nestedStringList) {
+        this.nestedStringList = nestedStringList;
+    }
+
+    /**
+     * @return the primitiveString
+     */
+    public String[] getPrimitiveString() {
+        return primitiveString;
+    }
+
+    /**
+     * @param primitiveString the primitiveString to set
+     */
+    public void setPrimitiveString(String[] primitiveString) {
+        this.primitiveString = primitiveString;
+    }
 }

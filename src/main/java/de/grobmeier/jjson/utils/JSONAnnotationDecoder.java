@@ -1,11 +1,16 @@
 package de.grobmeier.jjson.utils;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Map.Entry;
 
+import de.grobmeier.jjson.JSONArray;
 import de.grobmeier.jjson.JSONBoolean;
 import de.grobmeier.jjson.JSONException;
 import de.grobmeier.jjson.JSONObject;
@@ -42,7 +47,6 @@ public class JSONAnnotationDecoder {
         Set<Entry<String, JSONValue>> set = values.entrySet();
 
         for (Entry<String, JSONValue> entry : set) {
-            System.out.println(entry.getKey());
             JSONValue v = entry.getValue();
             putValue(target, JSONReflectionUtils.createSetter(entry.getKey()), v);
         }
@@ -62,6 +66,8 @@ public class JSONAnnotationDecoder {
                 putBooleanValue(target, methodName, value);
             } else if (value instanceof JSONObject) {
                 putObjectValue(target, methodName, value);
+            } else if (value instanceof JSONArray) {
+                putArrayValue(target, methodName, value);
             }
         } catch (SecurityException e) {
             throw new JSONException("Could not access POJO setter: " + methodName, e);
@@ -80,8 +86,63 @@ public class JSONAnnotationDecoder {
         }
     }
 
+    private void putArrayValue(Object target, String methodName, JSONValue value)
+            throws  JSONException, 
+                    NoSuchMethodException, 
+                    IllegalAccessException, 
+                    InvocationTargetException, 
+                    ClassNotFoundException, 
+                    InstantiationException {
+        JSONArray array = (JSONArray)value;
+        
+        Method methodInvoke = null;
+        Method[] methods = target.getClass().getMethods();
+        for (Method method : methods) {
+            if (method.getName().equals(methodName)) {
+                Class<?>[] params = method.getParameterTypes();
+                if (params.length != 1) {
+                    throw new JSONException("Parameters do not follow POJO bean conventions");
+                } else {
+                    Class<?> clazz = Class.forName(params[0].getName());
+                    
+                    if(List.class.getName().equals(clazz.getName())) {
+                        // List Field
+                        List<JSONValue> values = array.getValue();
+                        List l = new ArrayList();
+                        // TODO: just strings in lists supported
+                        for (JSONValue v : values) {
+                            l.add(((JSONString)v).toString());
+                        }
+                        methodInvoke = target.getClass().getMethod(methodName, clazz);
+                        methodInvoke.invoke(target, l);
+                    } else if(clazz.getComponentType() != null) {
+                        // Primitive array
+                        // TODO: whats going with zero sized arrays?
+                        Object a = Array.newInstance(clazz.getComponentType(), array.getValue().size());
+                        List<JSONValue> values = array.getValue();
+                        int i = 0;
+                        for (JSONValue v : values) {
+                            Array.set(a, i, ((JSONString)v).toString());
+                            i++;
+                        }
+                        methodInvoke = target.getClass().getMethod(methodName, clazz);
+                        methodInvoke.invoke(target, a);
+
+                    }
+                    
+                    
+                }
+            }
+        }
+    }
+
     private void putObjectValue(Object target, String methodName, JSONValue value)
-            throws JSONException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, ClassNotFoundException, InstantiationException {
+            throws  JSONException, 
+                    NoSuchMethodException, 
+                    IllegalAccessException, 
+                    InvocationTargetException, 
+                    ClassNotFoundException, 
+                    InstantiationException {
         Method methodInvoke = null;
         Method[] methods = target.getClass().getMethods();
         for (Method method : methods) {
