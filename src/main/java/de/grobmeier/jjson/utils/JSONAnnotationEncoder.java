@@ -44,11 +44,7 @@ public class JSONAnnotationEncoder {
 	private static final String EMTPY_STRING = "";
 	private static final String BRACKET_LEFT = "{";
 
-	// Getter prefix
-	private final static char[] get = {'g','e','t'};
-    private final static char[] is = {'i','s'};
-    
-    // Special values
+	// Special values
     private final static String NULL = "null";
     
     public String encode(Object result) throws JSONException {
@@ -140,9 +136,9 @@ public class JSONAnnotationEncoder {
                     String methodName = null;
                     // primitive boolean getters have is as prefix
                     if(PRIMITIVE_BOOLEAN.equals(field.getType().toString())) {
-                        methodName = createGetter(field.getName(), is);
+                        methodName = JSONReflectionUtils.createGetter(field.getName(), JSONReflectionUtils.IS);
                     } else {
-                        methodName = createGetter(field.getName(), get);
+                        methodName = JSONReflectionUtils.createGetter(field.getName(), JSONReflectionUtils.GET);
                     }
 
                     try {
@@ -211,12 +207,5 @@ public class JSONAnnotationEncoder {
 		return false;
     }
     
-    private String createGetter(String fieldname, char[] prefix) {
-        char[] chars = fieldname.toCharArray();
-        chars[0] = Character.toUpperCase(chars[0]); 
-        char[] result = new char[prefix.length + chars.length];
-        System.arraycopy(prefix, 0, result, 0, prefix.length);
-        System.arraycopy(chars, 0, result, prefix.length, chars.length);
-        return String.valueOf(result);
-    }
+    
 }
