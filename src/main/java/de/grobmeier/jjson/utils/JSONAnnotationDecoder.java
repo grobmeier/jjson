@@ -104,33 +104,29 @@ public class JSONAnnotationDecoder {
                     throw new JSONException("Parameters do not follow POJO bean conventions");
                 } else {
                     Class<?> clazz = Class.forName(params[0].getName());
-                    
+                    Object put = null;
                     if(List.class.getName().equals(clazz.getName())) {
                         // List Field
                         List<JSONValue> values = array.getValue();
-                        List l = new ArrayList();
+                        put = new ArrayList();
                         // TODO: just strings in lists supported
                         for (JSONValue v : values) {
-                            l.add(((JSONString)v).toString());
+                            ((List)put).add(((JSONString)v).toString());
                         }
-                        methodInvoke = target.getClass().getMethod(methodName, clazz);
-                        methodInvoke.invoke(target, l);
                     } else if(clazz.getComponentType() != null) {
                         // Primitive array
                         // TODO: whats going with zero sized arrays?
-                        Object a = Array.newInstance(clazz.getComponentType(), array.getValue().size());
+                        put = Array.newInstance(clazz.getComponentType(), array.getValue().size());
                         List<JSONValue> values = array.getValue();
                         int i = 0;
                         for (JSONValue v : values) {
-                            Array.set(a, i, ((JSONString)v).toString());
+                            // TODO
+                            Array.set(put, i, ((JSONString)v).getValue().toString());
                             i++;
                         }
-                        methodInvoke = target.getClass().getMethod(methodName, clazz);
-                        methodInvoke.invoke(target, a);
-
                     }
-                    
-                    
+                    methodInvoke = target.getClass().getMethod(methodName, clazz);
+                    methodInvoke.invoke(target, put);
                 }
             }
         }
