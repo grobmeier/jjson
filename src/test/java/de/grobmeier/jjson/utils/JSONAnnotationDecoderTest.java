@@ -11,8 +11,11 @@ public class JSONAnnotationDecoderTest {
     public void testDecode() throws Exception {
         JSONAnnotationDecoder decoder = new JSONAnnotationDecoder();
         AnnotatedSetTestClass result = 
-            decoder.decode(AnnotatedSetTestClass.class, "{\"test1\":\"mytestvalue\"}");
+            decoder.decode(AnnotatedSetTestClass.class, 
+                    "{\"test1\":\"mytestvalue\",\"test2\":true,\"test3\":true}");
         Assert.assertEquals("mytestvalue",result.getTest1());
+        Assert.assertEquals(true,result.isTest2());
+        Assert.assertEquals(Boolean.TRUE,result.getTest3());
     }
 
 }
