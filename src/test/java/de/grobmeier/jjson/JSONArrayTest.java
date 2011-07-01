@@ -15,8 +15,9 @@
  */
 package de.grobmeier.jjson;
 
-import org.junit.Test;
 import junit.framework.TestCase;
+
+import org.junit.Test;
 /**
  * 
  */

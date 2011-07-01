@@ -13,13 +13,14 @@
  *  either express or implied. See the License for the specific 
  *  language governing permissions and limitations under the License.
  */
-package de.grobmeier.jjson.utils;
+package de.grobmeier.jjson.convert;
 
 import junit.framework.TestCase;
 
 import org.junit.Test;
 
 import de.grobmeier.jjson.JSONValue;
+import de.grobmeier.jjson.convert.JSONDecoder;
 
 public class JSONDecoderTest {
     @Test

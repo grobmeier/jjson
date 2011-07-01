@@ -25,8 +25,7 @@ import org.junit.Test;
 public class JSONObjectTest {
 
     /**
-     * Test method for {@link org.apache.commons.json.JSONObject#
-     * put(java.lang.String, org.apache.commons.json.JSONValue)}.
+     * Test method
      */
     @Test
     public final void testPut() {

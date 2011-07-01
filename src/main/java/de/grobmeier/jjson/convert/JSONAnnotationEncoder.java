@@ -13,21 +13,23 @@
  *  either express or implied. See the License for the specific 
  *  language governing permissions and limitations under the License.
  */
-package de.grobmeier.jjson.utils;
+package de.grobmeier.jjson.convert;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import de.grobmeier.jjson.JSONException;
-import de.grobmeier.jjson.annotations.JSONField;
-import de.grobmeier.jjson.annotations.JSONObject;
 
 /**
  * 
@@ -45,12 +47,17 @@ public class JSONAnnotationEncoder {
 	private static final String EMTPY_STRING = "";
 	private static final String BRACKET_LEFT = "{";
 
+	/** Default format for dates */
+	private final static SimpleDateFormat DEFAULT_FORMAT = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+
+	private Map<String, SimpleDateFormat> formatterPool = new HashMap<String, SimpleDateFormat>();
+	
 	// Special values
     private final static String NULL = "null";
     
     public String encode(Object result) throws JSONException {
        StringBuilder builder = new StringBuilder();
-       encode(result, builder);
+       encode(result, builder, null);
        return builder.toString();
     }
     
@@ -60,8 +67,10 @@ public class JSONAnnotationEncoder {
      * @throws JSONException
      */
     @SuppressWarnings("unchecked")
-	public void encode(Object result, StringBuilder builder) throws JSONException {
-        if(result.getClass().isAssignableFrom(String.class)) {
+	public void encode(Object result, StringBuilder builder, JSON annotation) throws JSONException {
+    	if(result == null) {
+    		builder.append(NULL);
+    	} else if(result.getClass().isAssignableFrom(String.class)) {
             encodeString(((String)result), builder);
         } else if(result.getClass().isAssignableFrom(Integer.class)) {
             encodeInteger((Integer)result, builder);
@@ -71,9 +80,40 @@ public class JSONAnnotationEncoder {
         	encodeList((List<Object>)result, builder);
         } else if(hasInterface(result, Map.class)) {
         	encodeMap((Map<Object, Object>)result, builder);
+        } else if(result.getClass().isAssignableFrom(Date.class)) {
+        	encodeDate((Date)result, builder, annotation);
+        } else if(result.getClass().isArray()) {
+        	encodeArray(result, builder);
         } else {
             encodeObject(result, builder);
         }
+    }
+    
+    private void encodeArray(Object result, StringBuilder builder) throws JSONException {
+    	builder.append(ARRAY_LEFT);
+    	int length = Array.getLength(result);
+    	for (int i = 0; i < length; i++) {
+    		if(i > 0) {
+                builder.append(COMMA);
+            }
+			encode(Array.get(result, i), builder, null);
+		}
+    	builder.append(ARRAY_RIGHT);
+	}
+
+	private void encodeDate(Date result, StringBuilder builder, JSON annotation) throws JSONException {
+    	String customFormat = annotation.dateFormat();
+    	if(customFormat != null && !"".equals(customFormat)) {
+    		SimpleDateFormat format = formatterPool.get(customFormat);
+    		if(format == null) {
+    			format = new SimpleDateFormat(customFormat);
+    			formatterPool.put(customFormat, format);
+    		}
+    		encodeString(format.format(result), builder);
+    	} else {
+    		encodeString(DEFAULT_FORMAT.format(result), builder);
+    	}
+    	
     }
     
     private void encodeMap(Map<Object, Object> result, StringBuilder builder) throws JSONException {
@@ -89,7 +129,7 @@ public class JSONAnnotationEncoder {
 			Entry<Object, Object> entry = (Entry<Object, Object>) iterator.next();
 			encodeString(entry.getKey().toString(), builder);
 			builder.append(COLON);
-			encode(entry.getValue(), builder);
+			encode(entry.getValue(), builder,null);
 		}
     	builder.append(BRACKET_RIGHT);
     }
@@ -105,29 +145,36 @@ public class JSONAnnotationEncoder {
              }
     		 
 			Object object = iterator.next();
-			encode(object, builder);
+			encode(object, builder, null);
 		}
     	builder.append(ARRAY_RIGHT);
 	}
 
 	private String encodeObject(Object c, StringBuilder builder) throws JSONException {
-        if(c.getClass().getAnnotation(JSONObject.class) == null) {
+		if(c == null) {
+			return NULL;
+		}
+		
+        if(c.getClass().getAnnotation(JSON.class) == null) {
             return null;
         }
         
-        if(c == null) {
-            return NULL;
-        }
-        
-        boolean first = true;
-        
         builder.append(BRACKET_LEFT);
         
+        serializeFields(c, builder);
+        serializeMethods(c, builder);
+        builder.append(BRACKET_RIGHT);
+        return builder.toString();
+    }
+
+	private void serializeFields(Object c, StringBuilder builder)
+			throws JSONException {
+		boolean first = true;
         Field[] fields = c.getClass().getDeclaredFields();
         for (Field field : fields) {
             Annotation[] anons = field.getAnnotations();
             for (Annotation annotation : anons) {
-                if(annotation.annotationType().isAssignableFrom(JSONField.class)) {
+                if(annotation.annotationType().isAssignableFrom(JSON.class)) {
                     if(!first) {
                         builder.append(COMMA);
                     } else {
@@ -149,7 +196,7 @@ public class JSONAnnotationEncoder {
                         
                         encodeString(field.getName(), builder);
                         builder.append(COLON);
-                        encode(result, builder);
+                        encode(result, builder,(JSON)annotation);
                     } catch (SecurityException e) {
                         throw new JSONException(e);
                     } catch (NoSuchMethodException e) {
@@ -164,9 +211,48 @@ public class JSONAnnotationEncoder {
                 }
             }
         }
-        builder.append(BRACKET_RIGHT);
-        return builder.toString();
-    }
+	}
+	
+	private void serializeMethods(Object c, StringBuilder builder) throws JSONException {
+		boolean first = true;
+		Method[] methods = c.getClass().getDeclaredMethods();
+		for (Method method : methods) {
+		    Annotation[] anons = method.getAnnotations();
+		    for (Annotation annotation : anons) {
+		        if(annotation.annotationType().isAssignableFrom(JSON.class)) {
+		            if(!first) {
+		                builder.append(COMMA);
+		            } else {
+		                first = false;
+		            }
+		           
+		            try {
+		                Object result = method.invoke(c, (Object[])null);
+		                String name = method.getName();
+		                if(name.startsWith("is")) {
+		                	name = name.replaceFirst("is", "");
+		                	name = name.substring(0, 1).toLowerCase() + name.substring(1);
+		                }
+		                if(name.startsWith("get")) {
+		                	name = name.replaceFirst("get", "");
+		                	name = name.substring(0, 1).toLowerCase() + name.substring(1);
+		                }
+		                encodeString(name, builder);
+		                builder.append(COLON);
+		                encode(result, builder, (JSON)annotation);
+		            } catch (SecurityException e) {
+		                throw new JSONException(e);
+		            } catch (IllegalArgumentException e) {
+		                throw new JSONException(e);
+		            } catch (IllegalAccessException e) {
+		                throw new JSONException(e);
+		            } catch (InvocationTargetException e) {
+		                throw new JSONException(e);
+		            }
+		        }
+		    }
+		}
+	}
 
     private void encodeString(String string, StringBuilder result) {
     	if(string == null) {
@@ -198,9 +284,8 @@ public class JSONAnnotationEncoder {
     	}
     }
     
-    @SuppressWarnings("unchecked")
-	private boolean hasInterface(Object target, Class interfaceClass) {
-		Class[] interfaces = target.getClass().getInterfaces();
+	private boolean hasInterface(Object target, Class<?> interfaceClass) {
+		Class<?>[] interfaces = target.getClass().getInterfaces();
 		for (int i = 0; i < interfaces.length; i++) {
 			if(interfaceClass.getName().equals(interfaces[i].getName())) {
 				return true;

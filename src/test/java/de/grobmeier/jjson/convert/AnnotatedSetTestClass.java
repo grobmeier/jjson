@@ -1,28 +1,42 @@
-package de.grobmeier.jjson.utils;
+/*
+ *  Copyright 2007 Christian Grobmeier 
+ *  
+ *  Licensed under the Apache License, Version 2.0 (the "License"); 
+ *  you may not use this file except in compliance with the License. 
+ *  You may obtain a copy of the License at 
+ *  
+ *  http://www.apache.org/licenses/LICENSE-2.0 
+ *  
+ *  Unless required by applicable law or agreed to in writing, 
+ *  software distributed under the License is distributed 
+ *  on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, 
+ *  either express or implied. See the License for the specific 
+ *  language governing permissions and limitations under the License.
+ */
+package de.grobmeier.jjson.convert;
 
 import java.util.List;
 
-import de.grobmeier.jjson.annotations.JSONField;
-import de.grobmeier.jjson.annotations.JSONObject;
+import de.grobmeier.jjson.convert.JSON;
 
-@JSONObject
+@JSON
 public class AnnotatedSetTestClass {
-    @JSONField
+	@JSON
     private String test1 = null;
 
-    @JSONField
+	@JSON
     private boolean test2 = false;
     
-    @JSONField
+	@JSON
     private Boolean test3 = false;
     
-    @JSONField
+	@JSON
     private AnnotatedNestedSetClass nested = null;
     
-    @JSONField 
+	@JSON 
     private List<String> nestedStringList = null;
     
-    @JSONField
+	@JSON
     private String[] primitiveString = null;
     
     /**

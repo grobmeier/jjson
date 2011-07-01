@@ -13,11 +13,13 @@
  *  either express or implied. See the License for the specific 
  *  language governing permissions and limitations under the License.
  */
-package de.grobmeier.jjson.utils;
+package de.grobmeier.jjson.convert;
 
 import junit.framework.TestCase;
 
 import org.junit.Test;
+
+import de.grobmeier.jjson.convert.JSONAnnotationEncoder;
 
 
 public class JSONAnnotationEncoderTest {
@@ -25,11 +27,11 @@ public class JSONAnnotationEncoderTest {
     public void testSimpleClass() throws Exception {
     	String expected = 
     		"{\"value1\":1,\"value2\":\"blub\",\"value3\":2,\"value5\":3,\"value4\":" +
-    		"\"fasel\",\"intArray\":,\"value6\":true,\"value7\":false,\"test\":" +
+    		"\"fasel\",\"intArray\":[5,6,7,8,9],\"value6\":true,\"value7\":false,\"test\":" +
     		"{\"mys\":\"bla\",\"mylist\":[\"entry1\",\"entry2\",\"entry3\",\"entry4\",\"entry5\"]," +
     		"\"map\":{\"key1\":{\"innerfield\":\"innerfield_1\"}," +
-    		"\"key3\":{\"innerfield\":\"innerfield_3\"}," +
-    		"\"key2\":{\"innerfield\":\"innerfield_2\"}}}}";
+    		"\"key2\":{\"innerfield\":\"innerfield_2\"}," +
+    		"\"key3\":{\"innerfield\":\"innerfield_3\"}}}}";
         AnnotatedTestClass c = new AnnotatedTestClass();
         JSONAnnotationEncoder encoder = new JSONAnnotationEncoder();
         String json = encoder.encode(c);
