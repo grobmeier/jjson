@@ -15,11 +15,12 @@
  */
 package de.grobmeier.jjson;
 
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+
+
 
 public class JSONObject implements JSONValue {
     private Map<String, JSONValue> object = new HashMap<String, JSONValue>();
@@ -52,7 +53,7 @@ public class JSONObject implements JSONValue {
         StringBuffer buffer = new StringBuffer();
         buffer.append("{");
         Set<String> keys = object.keySet();
-        Iterator it = keys.iterator();
+        Iterator<String> it = keys.iterator();
         while(it.hasNext()) {
             String key = (String)it.next();
             buffer.append("\"");

@@ -59,7 +59,7 @@ public class JSONArray implements JSONValue {
         StringBuffer result = new StringBuffer();
         result.append("[");
         
-        Iterator it = values.iterator();
+        Iterator<JSONValue> it = values.iterator();
         while(it.hasNext()) {
             JSONValue value = (JSONValue)it.next();
             result.append(value.toJSON());
