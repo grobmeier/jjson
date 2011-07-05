@@ -13,7 +13,7 @@
 	<name>jjson-struts2</name>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <struts2.version>2.1.8.1</struts2.version>		
+        <struts2.version>2.2.3</struts2.version>		
 	</properties> 
 	<build>
 		<plugins>
@@ -52,6 +52,14 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+  			<groupId>org.apache.struts</groupId>
+  			<artifactId>struts2-junit-plugin</artifactId>
+  			<version>2.2.3</version>
+  			<scope>test</scope>
+		</dependency>
+		
 		<dependency>
 			<groupId>de.grobmeier.json</groupId>
 			<artifactId>jjson</artifactId>
