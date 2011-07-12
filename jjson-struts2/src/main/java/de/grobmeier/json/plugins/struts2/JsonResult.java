@@ -77,8 +77,8 @@ public class JsonResult extends StrutsResultSupport {
 		HttpServletResponse response = (HttpServletResponse) invocation
 				.getInvocationContext().get(HTTP_RESPONSE);
 
-		if (charset != null) {
-			response.setContentType("application/json; charset=UTF-8");
+		if (this.commentOutput) {
+			response.setContentType("text/ext-json");
 		} else {
 			response.setContentType("application/json");
 		}
