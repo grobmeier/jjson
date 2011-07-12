@@ -42,6 +42,8 @@ public class JsonResult extends StrutsResultSupport {
 
 	private String charSet = "UTF-8";
 
+	private boolean commentOutput = true;
+	
 	/** Default constructor */
 	public JsonResult() {
 	}
@@ -108,7 +110,14 @@ public class JsonResult extends StrutsResultSupport {
 			JSONAnnotationEncoder encoder = new JSONAnnotationEncoder();
 			String result = encoder.encode(obj);
 			log.debug("Encoded JSON: " + result);
-			writer.write(result);
+			if(this.commentOutput) {
+				log.debug("JSON will be served with comments - change with param: outputComment = false ");
+				writer.write("/* ");
+				writer.write(result);
+				writer.write(" */");
+			} else {
+				writer.write(result);
+			}
 		} finally {
 			if (writer != null) {
 				writer.flush();
@@ -134,5 +143,14 @@ public class JsonResult extends StrutsResultSupport {
 	 */
 	public void setCharSet(String charSet) {
 		this.charSet = charSet;
+	}
+	
+	/**
+	 * Set true, if the result json should be in comments \/* JSON *\/
+	 * false, other wise	
+	 * @param commentOutput true, if the output should be commented
+	 */
+	public void setCommentOutput(boolean commentOutput) {
+		this.commentOutput = commentOutput;
 	}
 }

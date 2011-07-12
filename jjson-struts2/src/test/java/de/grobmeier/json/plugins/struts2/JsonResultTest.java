@@ -33,4 +33,10 @@ public class JsonResultTest extends StrutsTestCase {
 		String executeAction = this.executeAction("/test");
 		Assert.assertEquals("{\"test\":\"mytest\"}", executeAction);
 	}
+	
+	@Test
+	public void testCommenteJson() throws Exception {
+		String executeAction = this.executeAction("/test2");
+		Assert.assertEquals("/* {\"test\":\"mytest\"} */", executeAction);
+	}
 }

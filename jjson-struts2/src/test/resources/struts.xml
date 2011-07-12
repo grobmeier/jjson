@@ -23,10 +23,22 @@
 <struts>
 	<package name="jjson" extends="struts-default">
 		<result-types>
-            <result-type name="json" class="de.grobmeier.json.plugins.struts2.JsonResult"/>
+            <result-type name="json" class="de.grobmeier.json.plugins.struts2.JsonResult">
+            	<param name="commentOutput">false</param>
+            </result-type>
         </result-types>
         
 		<action name="test" class="de.grobmeier.json.plugins.struts2.TestAction">
+			<result type="json" />
+		</action>
+	</package>
+	
+	<package name="commentJjson" extends="struts-default">
+		<result-types>
+            <result-type name="json" class="de.grobmeier.json.plugins.struts2.JsonResult" />
+        </result-types>
+        
+		<action name="test2" class="de.grobmeier.json.plugins.struts2.TestAction">
 			<result type="json" />
 		</action>
 	</package>
