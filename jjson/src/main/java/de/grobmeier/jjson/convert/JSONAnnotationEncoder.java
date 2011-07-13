@@ -74,6 +74,16 @@ public class JSONAnnotationEncoder {
             encodeString(((String)result), builder);
         } else if(result.getClass().isAssignableFrom(Integer.class)) {
             encodeInteger((Integer)result, builder);
+        } else if(result.getClass().isAssignableFrom(Long.class)) {
+            encodeLong((Long)result, builder);
+        } else if(result.getClass().isAssignableFrom(Double.class)) {
+            encodeDouble((Double)result, builder);
+        } else if(result.getClass().isAssignableFrom(Float.class)) {
+            encodeFloat((Float)result, builder);
+        } else if(result.getClass().isAssignableFrom(Short.class)) {
+            encodeShort((Short)result, builder);
+        } else if(result.getClass().isAssignableFrom(Byte.class)) {
+            encodeByte((Byte)result, builder);
         } else if(result.getClass().isAssignableFrom(Boolean.class)) {
             encodeBoolean((Boolean)result, builder);
         } else if(hasInterface(result, List.class)) {
@@ -270,6 +280,56 @@ public class JSONAnnotationEncoder {
         } else {
 			result.append(EMTPY_STRING);
 	        result.append(integer);
+	        result.append(EMTPY_STRING);
+        }
+    }
+    
+    private void encodeByte(Byte value, StringBuilder result) {
+    	if(value == null) {
+            result.append(NULL);
+        } else {
+			result.append(EMTPY_STRING);
+	        result.append(value);
+	        result.append(EMTPY_STRING);
+        }
+    }
+    
+    private void encodeDouble(Double value, StringBuilder result) {
+    	if(value == null) {
+            result.append(NULL);
+        } else {
+			result.append(EMTPY_STRING);
+	        result.append(value);
+	        result.append(EMTPY_STRING);
+        }
+    }
+    
+    private void encodeShort(Short value, StringBuilder result) {
+    	if(value == null) {
+            result.append(NULL);
+        } else {
+			result.append(EMTPY_STRING);
+	        result.append(value);
+	        result.append(EMTPY_STRING);
+        }
+    }
+    
+    private void encodeFloat(Float value, StringBuilder result) {
+    	if(value == null) {
+            result.append(NULL);
+        } else {
+			result.append(EMTPY_STRING);
+	        result.append(value);
+	        result.append(EMTPY_STRING);
+        }
+    }
+    
+    private void encodeLong(Long longValue, StringBuilder result) {
+    	if(longValue == null) {
+            result.append(NULL);
+        } else {
+			result.append(EMTPY_STRING);
+	        result.append(longValue);
 	        result.append(EMTPY_STRING);
         }
     }

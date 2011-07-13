@@ -27,7 +27,8 @@ public class JSONAnnotationEncoderTest {
     public void testSimpleClass() throws Exception {
     	String expected = 
     		"{\"value1\":1,\"value2\":\"blub\",\"value3\":2,\"value5\":3,\"value4\":" +
-    		"\"fasel\",\"intArray\":[5,6,7,8,9],\"value6\":true,\"value7\":false,\"test\":" +
+    		"\"fasel\",\"intArray\":[5,6,7,8,9],\"value6\":true,\"value7\":false,\"value8\":1000," +
+    		"\"value9\":10.23,\"value10\":9.23,\"value11\":17,\"test\":" +
     		"{\"mys\":\"bla\",\"mylist\":[\"entry1\",\"entry2\",\"entry3\",\"entry4\",\"entry5\"]," +
     		"\"map\":{\"key1\":{\"innerfield\":\"innerfield_1\"}," +
     		"\"key2\":{\"innerfield\":\"innerfield_2\"}," +

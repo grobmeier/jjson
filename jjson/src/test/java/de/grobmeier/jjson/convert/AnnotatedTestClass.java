@@ -46,6 +46,18 @@ public class AnnotatedTestClass {
     protected boolean value7 = false;
     
     @JSON
+    protected long value8 = 1000;
+    
+    @JSON
+    protected double value9 = 10.23;
+    
+    @JSON
+    protected float value10 = 9.23f;
+    
+    @JSON
+    protected byte value11 = 0x11;
+    
+    @JSON
     private AnotherAnnotatedTestClass test = new AnotherAnnotatedTestClass();
     
     /**
@@ -111,7 +123,39 @@ public class AnnotatedTestClass {
         return value7;
     }
 
-    /**
+    public long getValue8() {
+		return value8;
+	}
+
+	public void setValue8(long value8) {
+		this.value8 = value8;
+	}
+
+	public double getValue9() {
+		return value9;
+	}
+
+	public void setValue9(double value9) {
+		this.value9 = value9;
+	}
+
+	public float getValue10() {
+		return value10;
+	}
+
+	public void setValue10(float value10) {
+		this.value10 = value10;
+	}
+
+	public byte getValue11() {
+		return value11;
+	}
+
+	public void setValue11(byte value11) {
+		this.value11 = value11;
+	}
+
+	/**
      * @return the test
      */
     public AnotherAnnotatedTestClass getTest() {
