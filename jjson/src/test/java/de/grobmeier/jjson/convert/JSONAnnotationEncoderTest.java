@@ -38,4 +38,12 @@ public class JSONAnnotationEncoderTest {
         String json = encoder.encode(c);
         TestCase.assertEquals(expected, json);
     }
+    
+    @Test
+    public void testMultilineStringClass() throws Exception {
+    	MultilineAnnotatedTestClass c = new MultilineAnnotatedTestClass();
+    	JSONAnnotationEncoder encoder = new JSONAnnotationEncoder();
+        String json = encoder.encode(c);
+        TestCase.assertEquals("{\"mys\":\"bla\ntest\"}", json);
+    }
 }

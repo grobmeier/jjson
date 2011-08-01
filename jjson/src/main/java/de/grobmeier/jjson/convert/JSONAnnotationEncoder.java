@@ -71,7 +71,7 @@ public class JSONAnnotationEncoder {
     	if(result == null) {
     		builder.append(NULL);
     	} else if(result.getClass().isAssignableFrom(String.class)) {
-            encodeString(((String)result), builder);
+            encodeString(((String)result), builder, annotation);
         } else if(result.getClass().isAssignableFrom(Integer.class)) {
             encodeInteger((Integer)result, builder);
         } else if(result.getClass().isAssignableFrom(Long.class)) {
@@ -89,7 +89,7 @@ public class JSONAnnotationEncoder {
         } else if(hasInterface(result, List.class)) {
         	encodeList((List<Object>)result, builder);
         } else if(hasInterface(result, Map.class)) {
-        	encodeMap((Map<Object, Object>)result, builder);
+        	encodeMap((Map<Object, Object>)result, builder, annotation);
         } else if(result.getClass().isAssignableFrom(Date.class)) {
         	encodeDate((Date)result, builder, annotation);
         } else if(result.getClass().isArray()) {
@@ -119,14 +119,14 @@ public class JSONAnnotationEncoder {
     			format = new SimpleDateFormat(customFormat);
     			formatterPool.put(customFormat, format);
     		}
-    		encodeString(format.format(result), builder);
+    		encodeString(format.format(result), builder, annotation);
     	} else {
-    		encodeString(DEFAULT_FORMAT.format(result), builder);
+    		encodeString(DEFAULT_FORMAT.format(result), builder, annotation);
     	}
     	
     }
     
-    private void encodeMap(Map<Object, Object> result, StringBuilder builder) throws JSONException {
+    private void encodeMap(Map<Object, Object> result, StringBuilder builder, JSON annotation) throws JSONException {
     	boolean first = true;
     	builder.append(BRACKET_LEFT);
     	Set<Entry<Object, Object>> entries = result.entrySet();
@@ -137,7 +137,7 @@ public class JSONAnnotationEncoder {
                 first = false;
             }
 			Entry<Object, Object> entry = (Entry<Object, Object>) iterator.next();
-			encodeString(entry.getKey().toString(), builder);
+			encodeString(entry.getKey().toString(), builder, annotation);
 			builder.append(COLON);
 			encode(entry.getValue(), builder,null);
 		}
@@ -204,9 +204,9 @@ public class JSONAnnotationEncoder {
                         Method method = c.getClass().getMethod(methodName, (Class[])null);
                         Object result = method.invoke(c, (Object[])null);
                         
-                        encodeString(field.getName(), builder);
+                        encodeString(field.getName(), builder, (JSON)annotation);
                         builder.append(COLON);
-                        encode(result, builder,(JSON)annotation);
+                        encode(result, builder, (JSON)annotation);
                     } catch (SecurityException e) {
                         throw new JSONException(e);
                     } catch (NoSuchMethodException e) {
@@ -247,7 +247,7 @@ public class JSONAnnotationEncoder {
 		                	name = name.replaceFirst("get", "");
 		                	name = name.substring(0, 1).toLowerCase() + name.substring(1);
 		                }
-		                encodeString(name, builder);
+		                encodeString(name, builder, (JSON)annotation);
 		                builder.append(COLON);
 		                encode(result, builder, (JSON)annotation);
 		            } catch (SecurityException e) {
@@ -264,12 +264,18 @@ public class JSONAnnotationEncoder {
 		}
 	}
 
-    private void encodeString(String string, StringBuilder result) {
+    private void encodeString(String string, StringBuilder result, JSON annotation) {
     	if(string == null) {
             result.append(NULL);
         } else {
         	result.append(QUOTE);
-        	result.append(string);
+        	if(annotation != null && annotation.encodeLinebreaks()) {
+        		String replaced = string.replaceAll("\r\n","\\\\r");
+        		replaced = string.replaceAll("\n","\\\\n");
+        		result.append(replaced);
+        	} else {
+        		result.append(string);
+        	}
         	result.append(QUOTE);
         }
     }

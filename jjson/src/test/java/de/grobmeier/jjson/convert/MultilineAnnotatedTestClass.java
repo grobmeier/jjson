@@ -15,14 +15,21 @@
  */
 package de.grobmeier.jjson.convert;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
-/**
- * 
- */
-@Retention(RetentionPolicy.RUNTIME)
-public @interface JSON {
-	public String dateFormat() default "";
-	public boolean encodeLinebreaks() default false; 
+import de.grobmeier.jjson.convert.JSON;
+
+@JSON
+public class MultilineAnnotatedTestClass {
+	@JSON
+    private String mys = "bla\ntest";
+ 	/**
+     * @return the mys
+     */
+    public String getMys() {
+        return mys;
+    }
 }
