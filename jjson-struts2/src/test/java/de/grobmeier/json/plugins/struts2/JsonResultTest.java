@@ -29,7 +29,7 @@ public class JsonResultTest extends StrutsTestCase {
 	}
 
 	@Test
-	public void testSomething() throws Exception {
+	public void testSimple() throws Exception {
 		String executeAction = this.executeAction("/test");
 		Assert.assertEquals("{\"test\":\"mytest\"}", executeAction);
 	}
@@ -38,5 +38,11 @@ public class JsonResultTest extends StrutsTestCase {
 	public void testCommenteJson() throws Exception {
 		String executeAction = this.executeAction("/test2");
 		Assert.assertEquals("/* {\"test\":\"mytest\"} */", executeAction);
+	}
+	
+	@Test
+	public void testMultiline() throws Exception {
+		String executeAction = this.executeAction("/multilinetest");
+		Assert.assertEquals("{\"test\":\"mytest\\nagain\"}", executeAction);
 	}
 }

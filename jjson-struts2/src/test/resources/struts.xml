@@ -31,6 +31,10 @@
 		<action name="test" class="de.grobmeier.json.plugins.struts2.TestAction">
 			<result type="json" />
 		</action>
+		
+		<action name="multilinetest" class="de.grobmeier.json.plugins.struts2.MultilineTestAction">
+			<result type="json" />
+		</action>
 	</package>
 	
 	<package name="commentJjson" extends="struts-default">
