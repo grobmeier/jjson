@@ -15,15 +15,14 @@
  */
 package de.grobmeier.jjson.convert;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-
-/**
- * 
- */
-@Retention(RetentionPolicy.RUNTIME)
-public @interface JSON {
-	public String dateFormat() default "";
-	public boolean encodeLinebreaks() default false; 
-	public String replaceLinebreaksWith() default "";
+@JSON
+public class MultilineAnnotatedTestClass2 {
+	@JSON(replaceLinebreaksWith = "%0A")
+    private String mys = "bla\ntest";
+ 	/**
+     * @return the mys
+     */
+    public String getMys() {
+        return mys;
+    }
 }

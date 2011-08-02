@@ -44,6 +44,16 @@ public class JSONAnnotationEncoderTest {
     	MultilineAnnotatedTestClass c = new MultilineAnnotatedTestClass();
     	JSONAnnotationEncoder encoder = new JSONAnnotationEncoder();
         String json = encoder.encode(c);
-        TestCase.assertEquals("{\"mys\":\"bla\ntest\"}", json);
+        TestCase.assertEquals("{\"mys\":\"bla\\ntest\"}", json);
+        System.out.println(json);
+    }
+    
+    @Test
+    public void testReplaceLineBreaksWithClass() throws Exception {
+    	MultilineAnnotatedTestClass2 c = new MultilineAnnotatedTestClass2();
+    	JSONAnnotationEncoder encoder = new JSONAnnotationEncoder();
+        String json = encoder.encode(c);
+        TestCase.assertEquals("{\"mys\":\"bla%0Atest\"}", json);
+        System.out.println(json);
     }
 }

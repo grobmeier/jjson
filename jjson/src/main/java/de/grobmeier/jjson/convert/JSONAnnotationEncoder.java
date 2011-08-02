@@ -273,6 +273,10 @@ public class JSONAnnotationEncoder {
         		String replaced = string.replaceAll("\r\n","\\\\r");
         		replaced = string.replaceAll("\n","\\\\n");
         		result.append(replaced);
+        	} else if (annotation != null && !"".equals(annotation.replaceLinebreaksWith())) {
+        		String replaced = string.replaceAll("\r\n", annotation.replaceLinebreaksWith());
+        		replaced = replaced.replaceAll("\n", annotation.replaceLinebreaksWith());
+        		result.append(replaced);
         	} else {
         		result.append(string);
         	}
