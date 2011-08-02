@@ -43,6 +43,6 @@ public class JsonResultTest extends StrutsTestCase {
 	@Test
 	public void testMultiline() throws Exception {
 		String executeAction = this.executeAction("/multilinetest");
-		Assert.assertEquals("{\"test\":\"mytest\\nagain\",\"test2\":\"mytest%0Aagain\"}", executeAction);
+		Assert.assertEquals("{\"test\":\"mytest\\r\\nagain\",\"test2\":\"mytest%0Aagain\"}", executeAction);
 	}
 }

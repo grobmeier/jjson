@@ -25,7 +25,7 @@ public class MultilineTestAction extends ActionSupport {
 	private static final long serialVersionUID = -6707682090128966810L;
 	
 	@JSON(encodeLinebreaks = true)
-	private String test = "mytest\nagain";
+	private String test = "mytest\r\nagain";
 	
 	@JSON(replaceLinebreaksWith = "%0A")
 	private String test2 = "mytest\nagain";
