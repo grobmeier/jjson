@@ -15,16 +15,9 @@
  */
 package de.grobmeier.jjson.convert;
 
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-
-import de.grobmeier.jjson.convert.JSON;
-
 @JSON
 public class MultilineAnnotatedTestClass {
-	@JSON
+	@JSON(encodeLinebreaks = true)
     private String mys = "bla\ntest";
  	/**
      * @return the mys
