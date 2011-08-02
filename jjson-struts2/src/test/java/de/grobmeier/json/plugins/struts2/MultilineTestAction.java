@@ -24,11 +24,22 @@ public class MultilineTestAction extends ActionSupport {
 	/** Serial */
 	private static final long serialVersionUID = -6707682090128966810L;
 	
+	private static final char[] charArray = new char[5];
+	static {
+		
+		int i = 0;
+		charArray[i++] = 'm';
+		charArray[i++] = 'y';
+		charArray[i++] = '\n';
+		charArray[i++] = 'a';
+		charArray[i++] = 'g';
+	}
+	
 	@JSON(encodeLinebreaks = true)
-	private String test = "mytest\r\nagain";
+	private String test =  new String(charArray);
 	
 	@JSON(replaceLinebreaksWith = "%0A")
-	private String test2 = "mytest\nagain";
+	private String test2 = "my\nag";
 	
 	public String execute(){
 		return SUCCESS;

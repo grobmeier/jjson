@@ -42,7 +42,33 @@ public class JsonResultTest extends StrutsTestCase {
 	
 	@Test
 	public void testMultiline() throws Exception {
+		
+		char[] charArray = new char[6];
+			
+		int i = 0;
+		charArray[i++] = 'm';
+		charArray[i++] = 'y';
+		charArray[i++] = '\\';
+		charArray[i++] = 'n';
+		charArray[i++] = 'a';
+		charArray[i++] = 'g';
+		String part1 = new String(charArray);
+		
+		char[] charArray2 = new char[7];
+		
+		i = 0;
+		charArray2[i++] = 'm';
+		charArray2[i++] = 'y';
+		charArray2[i++] = '%';
+		charArray2[i++] = '0';
+		charArray2[i++] = 'A';
+		charArray2[i++] = 'a';
+		charArray2[i++] = 'g';
+		String part2 = new String(charArray2);
+		
 		String executeAction = this.executeAction("/multilinetest");
-		Assert.assertEquals("{\"test\":\"mytest\\r\\nagain\",\"test2\":\"mytest%0Aagain\"}", executeAction);
+		
+		String expected = "{\"test\":\"" + part1 + "\",\"test2\":\"" + part2 + "\"}";
+		Assert.assertEquals(expected, executeAction);
 	}
 }

@@ -44,8 +44,34 @@ public class JSONAnnotationEncoderTest {
     	MultilineAnnotatedTestClass c = new MultilineAnnotatedTestClass();
     	JSONAnnotationEncoder encoder = new JSONAnnotationEncoder();
         String json = encoder.encode(c);
-        TestCase.assertEquals("{\"mys\":\"bla\\ntest\"}", json);
-        System.out.println(json);
+        
+		char[] charArray = new char[19];
+		int i = 0;
+		charArray[i++] = '{';
+		charArray[i++] = '"';
+		charArray[i++] = 'm';
+		charArray[i++] = 'y';
+		charArray[i++] = 's';
+		charArray[i++] = '"';
+		charArray[i++] = ':';
+		charArray[i++] = '"';
+		charArray[i++] = 'b';
+		charArray[i++] = 'l';
+		charArray[i++] = 'a';
+		charArray[i++] = '\\';
+		charArray[i++] = 'n';
+		charArray[i++] = 't';
+		charArray[i++] = 'e';
+		charArray[i++] = 's';
+		charArray[i++] = 't';
+		charArray[i++] = '"';
+		charArray[i++] = '}';
+		
+		String part1 = new String(charArray);
+		
+		System.out.println(part1);
+		System.out.println(json);
+		TestCase.assertEquals(part1, json);
     }
     
     @Test

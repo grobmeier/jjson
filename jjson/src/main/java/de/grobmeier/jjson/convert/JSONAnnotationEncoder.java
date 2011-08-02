@@ -46,7 +46,10 @@ public class JSONAnnotationEncoder {
 	private static final String COMMA = ",";
 	private static final String EMTPY_STRING = "";
 	private static final String BRACKET_LEFT = "{";
-
+		
+	private final String CARRIAGE_RETURN = new String(new char[] { '\\', 'r' });
+	private final String LINE_FEED = new String(new char[] {'\\', '\\', 'n' });
+	
 	/** Default format for dates */
 	private final static SimpleDateFormat DEFAULT_FORMAT = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 
@@ -264,14 +267,14 @@ public class JSONAnnotationEncoder {
 		}
 	}
 
-    private void encodeString(String string, StringBuilder result, JSON annotation) {
+	private void encodeString(String string, StringBuilder result, JSON annotation) {
     	if(string == null) {
             result.append(NULL);
         } else {
         	result.append(QUOTE);
         	if(annotation != null && annotation.encodeLinebreaks()) {
-        		String replaced = string.replaceAll("\r","\\\\r");
-        		replaced = replaced.replaceAll("\n","\\\\n");
+        		String replaced = string.replaceAll("\r", CARRIAGE_RETURN);
+        		replaced = replaced.replaceAll("\n", LINE_FEED);
         		result.append(replaced);
         	} else if (annotation != null && !"".equals(annotation.replaceLinebreaksWith())) {
         		String replaced = string.replaceAll("\r\n", annotation.replaceLinebreaksWith());
