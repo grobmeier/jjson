@@ -27,6 +27,9 @@ public class MultilineTestAction extends ActionSupport {
 	@JSON(encodeLinebreaks = true)
 	private String test = "mytest\nagain";
 	
+	@JSON(replaceLinebreaksWith = "%0A")
+	private String test2 = "mytest\nagain";
+	
 	public String execute(){
 		return SUCCESS;
 	}
@@ -37,6 +40,12 @@ public class MultilineTestAction extends ActionSupport {
 	public void setTest(String test) {
 		this.test = test;
 	}
-	
-	
+
+	public String getTest2() {
+		return test2;
+	}
+
+	public void setTest2(String test2) {
+		this.test2 = test2;
+	}
 }
