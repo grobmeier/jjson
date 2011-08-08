@@ -71,6 +71,11 @@
 			<artifactId>struts2-core</artifactId>
 			<version>${struts2.version}</version>
 		</dependency>
+		
+		<!-- 
+			With Struts 2.3.1 the groupId has changed to:
+			org.apache.struts.xwork
+		 -->
 		<dependency>
 			<groupId>com.opensymphony</groupId>
 			<artifactId>xwork-core</artifactId>
