@@ -29,6 +29,10 @@
 	<version>0.1.0-SNAPSHOT</version>
 	<name>jjson</name>
 	<url>http://code.google.com/p/jjson</url>
+    <organization>
+        <name>Christian Grobmeier Software</name>
+        <url>http://www.grobmeier.de</url>
+    </organization>
     <issueManagement>
         <system>GoogleCode</system>
         <url>http://code.google.com/p/jjson/issues/list</url>
