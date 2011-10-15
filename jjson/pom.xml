@@ -42,6 +42,13 @@
       <connection>scm:svn:svn://jjson.googlecode.com/svn/trunk</connection>
       <developerConnection>scm:svn:svn+ssh://jjson.googlecode.com/svn/trunk</developerConnection>
     </scm>
+    <distributionManagement>
+        <site>
+            <id>jjson.website</id>
+            <url>scp://grobmeier.de/kunden/homepages/19/d204468537/htdocs/code.grobmeier.de/jjson</url>
+        </site>
+     </distributionManagement>
+
 	<mailingLists>
 	    <mailingList>
 	      <name>JJSON-Dev</name>
@@ -126,6 +133,13 @@
 		            </plugin>
 		          </reportPlugins>
 		        </configuration>
+                 <dependencies>
+                 <dependency>
+                   <groupId>org.apache.maven.wagon</groupId>
+                   <artifactId>wagon-ssh</artifactId>
+                   <version>2.0</version>
+                 </dependency>
+               </dependencies>
 		      </plugin>
 					
 			
