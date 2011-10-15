@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+  <properties>
+    <title>JJSON - A JSON Library for Java without dependencies</title>
+    <author email="grobmeier@gmail.com">Christian Grobmeier</author>
+  </properties>
+  <!-- Optional HEAD element, which is copied as is into the XHTML <head> element -->
+  <head>
+    <style type="text/css">
+    	h2 {
+    		font-size: 50px;
+    	}
+    </style>
+  </head>
+  <body>
+    <!-- The body of the document contains a number of sections -->
+    <section name="Decoding a json string into a POJO">
+      	<p>
+            To map a json string into a POJO, use this:
+            <source>
+
+JSONAnnotationDecoder decoder = new JSONAnnotationDecoder();
+AnnotatedSetTestClass result =
+            decoder.decode(AnnotatedSetTestClass.class, "{\"test1\" : "OK"}");
+result.getTest1() will return "OK" then.
+            </source>
+		</p>
+    </section>
+
+    <section name="Encoding a POJO to JSON">
+      <source>
+
+AnnotatedTestClass c = new AnnotatedTestClass();
+JSONAnnotationEncoder encoder = new JSONAnnotationEncoder();
+String json = encoder.encode(c);
+      </source>
+
+      The AnnotatedTestClass must have @JSON at the class top level and on any field or method which should
+      be used for the JSON encoding. A field should be public or have appropriate getters.
+    </section>
+
+    <section name="Object API - Object to JSON">
+        <source>
+
+JSONObject o = new JSONObject();
+o.put("mykey", new JSONString("myvalue"));
+object.toJSON()
+        </source>
+
+      This will result in: {"mykey":"myvalue"}
+    </section>
+
+    <section name="Object API - JSON to Object">
+        You can create JSONObjects from a JSON String too. As all classes from the API implement JSONValue,
+        you will be mostly operating with that interface.
+
+        <source>
+JSONDecoder decoder = new JSONDecoder("{\"key\":\"value\",\"key2\":{\"key3\":\"value2\"}}");
+JSONValue result = decoder.decode();
+TestCase.assertEquals("{\"key2\":{\"key3\":\"value2\"},\"key\":\"value\"}", result.toJSON());
+        </source>
+    </section>
+
+  </body>
+</document>

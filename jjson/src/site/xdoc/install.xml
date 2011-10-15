@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+  <properties>
+    <title>JJSON - A JSON Library for Java without dependencies</title>
+    <author email="grobmeier@gmail.com">Christian Grobmeier</author>
+  </properties>
+  <!-- Optional HEAD element, which is copied as is into the XHTML <head> element -->
+  <head>
+    <style type="text/css">
+    	h2 {
+    		font-size: 50px;
+    	}
+    </style>
+  </head>
+  <body>
+    <!-- The body of the document contains a number of sections -->
+    <section name="Install">
+      	<p>
+              Just drop the jar-File(s) into your projects classpath and go for it. At the moment there is no maven repository available online,
+              but this is in the works.
+		</p>
+    </section>
+
+      <section name="Install the Struts 2 Plugin">
+          Install the JsonResult? class in your struts.xml package:
+
+          <source>
+
+&lt;result-types&gt;
+    &lt;result-type name="json" class="de.grobmeier.json.plugins.struts2.JsonResult"/&gt;
+&lt;/result-types&gt;
+          </source>
+
+          Then you can use this result type like that:
+
+          <source>
+
+&lt;action name="doSomething" class="de.grobmeier.DoSomething"&gt;
+    &lt;result type="json" /&gt;
+&lt;/action&gt;
+          </source>
+
+          The result is a json string.
+
+          Please note, everything you want in your JSON string must be annotated with @JSON, even the Action class it self.
+
+          <source>
+
+@JSON
+class DoSomething {
+    @JSON public String myString = "test";
+    @JSON public String myString2 = "test2";
+    // GETTER necessary like getMyString()
+}
+          </source>
+
+          This will return {"myString" : "test", "myString2" : "test2"}
+
+          Fields need matching getter methods.
+
+          You can even annotate methods instead of the fields, if you would like to to return a object created on the fly:
+
+          <source>
+
+@JSON
+class DoSomething {
+      @JSON public void blub() { return "test"; }
+}
+          </source>
+
+          This will return {"blub" : "test"}
+      </section>
+
+
+  </body>
+</document>

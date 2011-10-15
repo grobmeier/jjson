@@ -35,5 +35,15 @@
 		  <li>Creating a json string out of a java object net</li>
 		</ul>
     </section>
+
+    <section name="Why another JSon-Lib for Java?">
+      I just didn't want to have complex implementations of this simple notation- most of the features other libs gave to me i didn't use. If you feel the same you should consider to contact me (on the dev list) and contribute some patches. You are welcome.
+    </section>
+
+    <section name="State of development">
+      <p>The new version should work for a lots of cases. Mapping with annotations and working with json using the apis objects work in both directions.</p>
+      <p>The struts 2 plugin is pretty new and has the ususal flaws.</p>
+    </section>
+
   </body>
 </document>

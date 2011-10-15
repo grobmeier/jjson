@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="http://maven.apache.org/XDOC/2.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+  <properties>
+    <title>JJSON - A JSON Library for Java without dependencies</title>
+    <author email="grobmeier@gmail.com">Christian Grobmeier</author>
+  </properties>
+  <!-- Optional HEAD element, which is copied as is into the XHTML <head> element -->
+  <head>
+    <style type="text/css">
+    	h2 {
+    		font-size: 50px;
+    	}
+    </style>
+  </head>
+  <body>
+    <!-- The body of the document contains a number of sections -->
+    <section name="Downloads">
+      	<p>
+              You can get JJSON and its Struts Plugin here:<br/>
+              <a href="http://code.google.com/p/jjson/downloads/list">http://code.google.com/p/jjson/downloads/list</a>
+		</p>
+    </section>
+
+  </body>
+</document>

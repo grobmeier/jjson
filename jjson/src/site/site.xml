@@ -34,6 +34,9 @@
 
         <menu name="${project.name}">
             <item name="Home" href="index.html" />
+            <item name="Download" href="downloads.html" />
+            <item name="Install" href="install.html" />
+            <item name="Usage" href="basics.html" />
         </menu>
 
         <menu ref="reports" />
