@@ -81,6 +81,9 @@
 	       <name>Hugh Reid</name>
 	       <url>http://code.google.com/u/reid.hugh/</url>
 	   </contributor>
+	   <contributor>
+	   		<name>Aleksej Turko</name>
+	   </contributor>
 	</contributors>
 	<build>
 		<plugins>
