@@ -43,6 +43,8 @@ public class JSONDecoder {
         reader = new JSONReader(json);
     }
     
+    private final static char CONTROL = '\\';
+    
     /**
      * Special chars which open a type
      */
@@ -171,7 +173,7 @@ public class JSONDecoder {
      * @return
      */
     private boolean isOpener(char c) {
-        if(reader.readBefore() == '\\') {
+        if(reader.readBefore() == CONTROL) {
             return false;
         }
         Opener[] opener = Opener.values();
@@ -188,7 +190,7 @@ public class JSONDecoder {
      * @return
      */
     private boolean isCloser(char c) {
-        if(reader.readBefore() == '\\') {
+        if(reader.readBefore() == CONTROL) {
             return false;
         }
         Closer[] closer = Closer.values();
@@ -401,11 +403,12 @@ public class JSONDecoder {
             while(reader.next()) {
                 char temp = reader.current();
                 // Strings cannot have a opener inside
-                if(isCloser(temp)) {
-                    break;
-                } else {
-                    result.append(temp);
+                if(Opener.STRING.sign == temp) {
+                	if(CONTROL != reader.readBefore()) {
+                		break;
+                	}
                 }
+                result.append(temp);
             }
         } else {
             return new JSONString("");

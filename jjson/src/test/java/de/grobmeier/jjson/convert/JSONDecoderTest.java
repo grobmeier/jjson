@@ -221,4 +221,20 @@ public class JSONDecoderTest {
     	// Attention: blanks between object members are not supported in plain json - there they are not generated in toJSON
     	TestCase.assertEquals("{\"total\":123,\"data\":[{\"text\":\"test :-) \"},{\"a.name\":\"hello\"}]}", result.toJSON());
     }
+    
+    @Test 
+    public final void testNestedArraySymbols() {
+    	String json ="\"test[]test\"";
+    	JSONDecoder decoder = new JSONDecoder(json);
+    	JSONValue result = decoder.decode();
+    	TestCase.assertEquals(json, result.toJSON());
+    }
+    
+    @Test 
+    public final void testNestedObjectSymbols() {
+    	String json ="\"test{}te{[]}st\"";
+    	JSONDecoder decoder = new JSONDecoder(json);
+    	JSONValue result = decoder.decode();
+    	TestCase.assertEquals(json, result.toJSON());
+    }
 }
