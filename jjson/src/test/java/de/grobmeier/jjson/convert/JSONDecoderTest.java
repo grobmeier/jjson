@@ -237,4 +237,12 @@ public class JSONDecoderTest {
     	JSONValue result = decoder.decode();
     	TestCase.assertEquals(json, result.toJSON());
     }
+    
+    @Test 
+    public final void testSomething() {
+    	String json ="{\"roles\":{}}";
+    	JSONDecoder decoder = new JSONDecoder(json);
+    	JSONValue result = decoder.decode();
+    	TestCase.assertEquals(json, result.toJSON());
+    }
 }

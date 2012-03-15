@@ -340,6 +340,12 @@ public class JSONDecoder {
         while(hasNext) {
             // key must be a string
             reader.next();
+            
+            if(reader.current() == Closer.jsonobject.sign) {
+                hasNext = false;
+                return result;
+            }
+            
             JSONString key = decodeString();
             
             while(reader.next()) {
