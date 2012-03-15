@@ -80,6 +80,5 @@ public class JSONAnnotationEncoderTest {
     	JSONAnnotationEncoder encoder = new JSONAnnotationEncoder();
         String json = encoder.encode(c);
         TestCase.assertEquals("{\"mys\":\"bla%0Atest\"}", json);
-        System.out.println(json);
     }
 }
