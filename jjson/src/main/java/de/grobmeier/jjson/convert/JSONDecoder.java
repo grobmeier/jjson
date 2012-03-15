@@ -370,10 +370,14 @@ public class JSONDecoder {
             reader.next();
             JSONValue value = decode();
             result.add(value);
+            
+            if(reader.current() == Closer.jsonarray.sign) {
+                hasNext = false;
+            }
             reader.next();
             if(reader.current() == Closer.jsonarray.sign) {
                 hasNext = false;
-            } 
+            }
         }
         return result;
     }

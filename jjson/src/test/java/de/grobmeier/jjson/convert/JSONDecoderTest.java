@@ -204,4 +204,13 @@ public class JSONDecoderTest {
         JSONValue result = decoder.decode();
         TestCase.assertEquals("[\"key1\",\"key2\",-12345.56,\"bla\",null]", result.toJSON());
     }
+    
+    @Test
+    public final void testEmptyArray() {
+    	String json = "{\"total\":0,\"data\":[]}";
+    	JSONDecoder decoder = new JSONDecoder(json);
+    	JSONValue result = decoder.decode();
+    	TestCase.assertEquals(json, result.toJSON());
+    }
+
 }
