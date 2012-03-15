@@ -388,6 +388,11 @@ public class JSONDecoder {
      */
     private JSONString decodeString() {
         StringBuilder result = new StringBuilder();
+        
+        while(reader.current()==' ') {
+        	reader.next();
+        }
+        
         if(reader.current() == Opener.STRING.sign) {
             while(reader.next()) {
                 char temp = reader.current();

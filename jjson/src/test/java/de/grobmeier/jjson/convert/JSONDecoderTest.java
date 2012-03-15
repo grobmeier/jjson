@@ -213,4 +213,12 @@ public class JSONDecoderTest {
     	TestCase.assertEquals(json, result.toJSON());
     }
 
+    @Test
+    public final void testEmptySpace() {
+    	String json = "{\"total\":123, \"data\":[{\"text\":\"test :-) \"},{\"a.name\":\"hello\"}]}";
+    	JSONDecoder decoder = new JSONDecoder(json);
+    	JSONValue result = decoder.decode();
+    	// Attention: blanks between object members are not supported in plain json - there they are not generated in toJSON
+    	TestCase.assertEquals("{\"total\":123,\"data\":[{\"text\":\"test :-) \"},{\"a.name\":\"hello\"}]}", result.toJSON());
+    }
 }
