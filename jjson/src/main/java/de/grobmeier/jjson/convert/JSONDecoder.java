@@ -368,6 +368,10 @@ public class JSONDecoder {
         while(hasNext) {
             // key must be a string
             reader.next();
+            if(reader.current() == Closer.jsonarray.sign) {
+                hasNext = false;
+                return result;
+            }
             JSONValue value = decode();
             result.add(value);
             
