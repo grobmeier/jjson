@@ -15,14 +15,19 @@
  */
 package de.grobmeier.jjson.convert;
 
+import de.grobmeier.jjson.convert.JSON;
+
 @JSON
-public class MultilineAnnotatedTestClass {
-    @JSON()
-    private String mys = "bla\ntest";
- 	/**
-     * @return the mys
-     */
-    public String getMys() {
-        return mys;
-    }
+public class SpecialCharAnnotatedTestClass {
+	
+	@JSON
+    private String value = "b[l]u{b}\"test";
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
 }

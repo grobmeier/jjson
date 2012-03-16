@@ -17,7 +17,7 @@ package de.grobmeier.jjson.convert;
 
 @JSON
 public class MultilineAnnotatedTestClass2 {
-	@JSON(replaceLinebreaksWith = "%0A")
+    @JSON()
     private String mys = "bla\ntest";
  	/**
      * @return the mys

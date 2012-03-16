@@ -24,6 +24,4 @@ import java.lang.annotation.RetentionPolicy;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface JSON {
 	public String dateFormat() default "";
-	public boolean encodeLinebreaks() default false; 
-	public String replaceLinebreaksWith() default "";
 }

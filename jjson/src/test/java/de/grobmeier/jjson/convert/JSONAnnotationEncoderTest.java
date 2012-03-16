@@ -79,6 +79,15 @@ public class JSONAnnotationEncoderTest {
     	MultilineAnnotatedTestClass2 c = new MultilineAnnotatedTestClass2();
     	JSONAnnotationEncoder encoder = new JSONAnnotationEncoder();
         String json = encoder.encode(c);
-        TestCase.assertEquals("{\"mys\":\"bla%0Atest\"}", json);
+        TestCase.assertEquals("{\"mys\":\"bla\\ntest\"}", json);
+    }
+    
+    @Test
+    public void testSpecialChar() throws Exception {
+    	SpecialCharAnnotatedTestClass c = new SpecialCharAnnotatedTestClass(); 
+    	JSONAnnotationEncoder encoder = new JSONAnnotationEncoder();
+        String json = encoder.encode(c);
+        TestCase.assertEquals("{\"value\":\"b[l]u{b}\\\"test\"}", json);
+        System.out.println(json);
     }
 }

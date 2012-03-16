@@ -30,13 +30,14 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import de.grobmeier.jjson.JSONException;
+import de.grobmeier.jjson.translator.StringEscapeUtils;
 
 /**
  * 
  */
 public class JSONAnnotationEncoder {
 	// Key signs
-    // TODO: use allready defined Openener/Closer Enums from basic decoder
+    // TODO: use already defined Openener/Closer Enums from basic decoder
     private static final String QUOTE = "\"";
 	private static final String PRIMITIVE_BOOLEAN = "boolean";
 	private static final String ARRAY_RIGHT = "]";
@@ -267,22 +268,14 @@ public class JSONAnnotationEncoder {
 		}
 	}
 
-	private void encodeString(String string, StringBuilder result, JSON annotation) {
+    private void encodeString(String string, StringBuilder result, JSON annotation) {
     	if(string == null) {
             result.append(NULL);
         } else {
         	result.append(QUOTE);
-        	if(annotation != null && annotation.encodeLinebreaks()) {
-        		String replaced = string.replaceAll("\r", CARRIAGE_RETURN);
-        		replaced = replaced.replaceAll("\n", LINE_FEED);
-        		result.append(replaced);
-        	} else if (annotation != null && !"".equals(annotation.replaceLinebreaksWith())) {
-        		String replaced = string.replaceAll("\r\n", annotation.replaceLinebreaksWith());
-        		replaced = replaced.replaceAll("\n", annotation.replaceLinebreaksWith());
-        		result.append(replaced);
-        	} else {
-        		result.append(string);
-        	}
+        	
+        	result.append(StringEscapeUtils.escapeJava(string));
+        	
         	result.append(QUOTE);
         }
     }
