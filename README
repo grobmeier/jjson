@@ -1,0 +1,8 @@
+This project contains two modules:
+
+JJSON is a pure Java lib dealing with JSON. It does not need dependencies and is easy to use.
+
+JJSON-Struts is a Struts 2 plugin which provides a result type to return JSON.
+
+More info and examples can be found here:
+http://code.grobmeier.de/jjson
