@@ -1,8 +1,11 @@
 JJSON
-Copyright 2002-2009 Christian Grobmeier
+Copyright 2002-2012 Christian Grobmeier
 
 This product includes software developed by
 Christian Grobmeier(http://www.grobmeier.de/).
 
-Contributors:
-- Hugh Reid
+Contributors are listed in the pom.xml file.
+
+This product uses some code developed by Apache Commons:
+http://commons.apache.org
+You can find that code in the translators package. It has been taken from [lang].
