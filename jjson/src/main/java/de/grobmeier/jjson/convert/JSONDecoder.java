@@ -323,7 +323,7 @@ public class JSONDecoder {
         try {
             number = numberFormat.parse(sb.toString());
         } catch (ParseException e) {
-            // TODO Integrate loggin
+            // TODO Integrate logging?
             e.printStackTrace();
         }
         // parsing to make sure the string is a number
