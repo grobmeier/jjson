@@ -129,12 +129,10 @@ public class JSONAnnotationDecoder {
                         }
                     } else if(clazz.getComponentType() != null) {
                         // Primitive array
-                        // TODO: whats going with zero sized arrays?
                         put = Array.newInstance(clazz.getComponentType(), array.getValue().size());
                         List<JSONValue> values = array.getValue();
                         int i = 0;
                         for (JSONValue v : values) {
-                            // TODO
                             Array.set(put, i, ((JSONString)v).getValue().toString());
                             i++;
                         }
