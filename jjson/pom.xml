@@ -274,7 +274,5 @@
                 </repository>
             </distributionManagement>
         </profile>
-        
     </profiles>
-    
 </project>
