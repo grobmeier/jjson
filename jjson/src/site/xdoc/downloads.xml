@@ -19,8 +19,9 @@
     <section name="Downloads">
       	<p>
               You can get JJSON and its Struts Plugin here:<br/>
-              <a href="http://code.google.com/p/jjson/downloads/list">http://code.google.com/p/jjson/downloads/list</a>
+              <a href="http://code.grobmeier.de/mvn/stable/de/grobmeier/json/">http://code.grobmeier.de/mvn/stable/de/grobmeier/json/</a>
 		</p>
+        <p>Or you use this location as a maven repository as described <a href="install.html">here</a></p>
     </section>
 
   </body>
