@@ -21,10 +21,11 @@
                 features you really need to work. You can find the JSON Specification there: http://www.json.org
             </p>
   
-            <p>Currently JJSON does not need any dependency - it's planned that it will not need any dependencies in the future.</p> 
+            <p>JJSON actually uses some code from Apache Commons Lang. The code is shaded into the jar file,
+            and so you don't need to care about this. The Lang-Classes were relocated to the jjson-Package,
+            you are save to use your own version of Commons Lang. In addition, only a part of this jar is delivered.</p> 
   
-            <p>In addition there is some space for framework plugins which use this api. At the moment there is a 
-                Struts 2 plugin available, which can be used as a result type to return JSON Strings.
+            <p>There is a Struts 2 plugin available, which can be used as a result type to return JSON Strings.
             </p>
         </section>
 
