@@ -1,49 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document xmlns="http://maven.apache.org/XDOC/2.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
-  <properties>
-    <title>JJSON - A JSON Library for Java without dependencies</title>
-    <author email="grobmeier@gmail.com">Christian Grobmeier</author>
-  </properties>
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/XDOC/2.0 http://maven.apache.org/xsd/xdoc-2.0.xsd">
+    <properties>
+        <title>JJSON - A JSON Library for Java without dependencies</title>
+        <author email="grobmeier@gmail.com">Christian Grobmeier</author>
+    </properties>
   <!-- Optional HEAD element, which is copied as is into the XHTML <head> element -->
-  <head>
-    <style type="text/css">
-    	h2 {
-    		font-size: 50px;
-    	}
-    </style>
-  </head>
-  <body>
+    <head>
+        <style type="text/css">
+            h2 {
+            font-size: 50px;
+            }
+        </style>
+    </head>
+    <body>
     <!-- The body of the document contains a number of sections -->
-    <section name="JJSON - A JSON Library for Java without dependencies">
-      	<p>JJSon is a simple API for dealing with the JSON format. It needs no dependencies and just offers the 
-  		features you really need to work. You can find the JSON Specification there: http://www.json.org</p>
+        <section name="JJSON - A JSON Library for Java without dependencies">
+            <p>JJSon is a simple API for dealing with the JSON format. It needs no dependencies and just offers the 
+                features you really need to work. You can find the JSON Specification there: http://www.json.org
+            </p>
   
-  		<p>Currently JJSON does not need any dependency - it's planned that it will not need any dependencies in the future.</p> 
+            <p>Currently JJSON does not need any dependency - it's planned that it will not need any dependencies in the future.</p> 
   
-  		<p>In addition there is some space for framework plugins which use this api. At the moment there is a 
-  		Struts 2 plugin available, which can be used as a result type to return JSON Strings.
-		</p>
-    </section>
+            <p>In addition there is some space for framework plugins which use this api. At the moment there is a 
+                Struts 2 plugin available, which can be used as a result type to return JSON Strings.
+            </p>
+        </section>
 
-    <section name="Features">
-		<ul>
-		  <li>Using annotations to create json strings out of objects</li>
-		  <li>Map json strings into POJOs</li>
-		  <li>Creating a java object net out of a json string</li>
-		  <li>Creating a json string out of a java object net</li>
-		</ul>
-    </section>
+        <section name="Features">
+            <ul>
+                <li>Using annotations to create json strings out of objects</li>
+                <li>Map json strings into POJOs</li>
+                <li>Creating a java object net out of a json string</li>
+                <li>Creating a json string out of a java object net</li>
+            </ul>
+        </section>
 
-    <section name="Why another JSon-Lib for Java?">
-      I just didn't want to have complex implementations of this simple notation- most of the features other libs gave to me i didn't use. If you feel the same you should consider to contact me (on the dev list) and contribute some patches. You are welcome.
-    </section>
+        <section name="Why another JSon-Lib for Java?">
+            I just didn't want to have complex implementations of this simple notation- most of the features other libs gave to me i didn't use. If you feel the same you should consider to contact me (on the dev list) and contribute some patches. You are welcome.
+        </section>
 
-    <section name="State of development">
-      <p>The new version should work for a lots of cases. Mapping with annotations and working with json using the apis objects work in both directions.</p>
-      <p>The struts 2 plugin is pretty new and has the ususal flaws.</p>
-    </section>
+        <section name="State of development">
+            <p>The new version should work for a lots of cases. Mapping with annotations and working with json using the apis objects work in both directions.</p>
+            <p>The struts 2 plugin is pretty new and has the ususal flaws.</p>
+        </section>
 
-  </body>
+    </body>
 </document>
