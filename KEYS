@@ -13,3 +13,64 @@ Developers: please ensure that your key is also available via the
 PGP keyservers:
          gpg --keyserver hkp://pool.sks-keyservers.net --send-keys KEYID
 
+
+
+pub   4096R/E4694898 2012-03-17
+  Schl.-Fingerabdruck = 3F9A 17A9 C44D 2967 9539  600D 66E9 6D3A E469 4898
+uid                  Christian Grobmeier (Codesigning) <cg@grobmeier.de>
+sig 3        E4694898 2012-03-17  Christian Grobmeier (Codesigning) <cg@grobmeier.de>
+sub   4096R/71558AF3 2012-03-17
+sig          E4694898 2012-03-17  Christian Grobmeier (Codesigning) <cg@grobmeier.de>
+
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: GnuPG v1.4.11 (Darwin)
+
+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
+c3FhrNtzW3vrethwFLWkAjsF
+=hwLK
+-----END PGP PUBLIC KEY BLOCK-----
