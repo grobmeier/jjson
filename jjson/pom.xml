@@ -40,7 +40,7 @@
         <url>https://github.com/grobmeier/jjson/issues</url>
     </issueManagement>
     <scm>
-        <url>http://code.google.com/p/jjson/source/browse</url>
+        <url>https://github.com/grobmeier/jjson</url>
         <connection>scm:git:git://github.com/grobmeier/jjson.git</connection>
         <developerConnection>scm:git:git@github.com:grobmeier/jjson.git</developerConnection>
     </scm>
