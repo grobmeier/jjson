@@ -9,7 +9,7 @@
     <groupId>de.grobmeier.json</groupId>
     <artifactId>jjson-struts2</artifactId>
     <packaging>jar</packaging>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.1</version>
     <name>jjson-struts2</name>
     
     <description>
