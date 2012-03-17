@@ -60,5 +60,11 @@
                 Please also see: http://semver.org/
             </p>
         </section>
+        
+        <section name="License">
+            <p>Copyright 2007 - 2012 Christian Grobmeier</p>
+            <p>Licensed under the Apache License, Version 2.0: http://www.apache.org/licenses/LICENSE-2.0</p>
+        </section>
+        
     </body>
 </document>
