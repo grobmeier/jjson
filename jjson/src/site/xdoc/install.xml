@@ -21,22 +21,22 @@
             </p>
         
             <source>
-            &lt;repositories&gt;
-                &lt;repository&gt;
-                    &lt;id>grobmeier-stable&lt;/id&gt;
-                    &lt;url>http://code.grobmeier.de/mvn/stable&lt;/url&gt;
-                &lt;/repository&gt;
-            &lt;/repositories&gt;
+&lt;repositories&gt;
+    &lt;repository&gt;
+        &lt;id>grobmeier-stable&lt;/id&gt;
+        &lt;url>http://code.grobmeier.de/mvn/stable&lt;/url&gt;
+    &lt;/repository&gt;
+&lt;/repositories&gt;
             </source>
             
             <p>Then add the following dependency to your project</p>
             
             <source>
-             &lt;dependency&gt;
-                &lt;groupId&gt;de.grobmeier.json&lt;/groupId&gt;
-                &lt;artifactId&gt;jjson&lt;/artifactId&gt;
-                &lt;version&gt;0.1.0&lt;/version&gt;
-             &lt;/dependency&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;de.grobmeier.json&lt;/groupId&gt;
+    &lt;artifactId&gt;jjson&lt;/artifactId&gt;
+    &lt;version&gt;0.1.0&lt;/version&gt;
+&lt;/dependency&gt;
             </source>
             
         </section>
@@ -52,7 +52,6 @@
             Install the JsonResult? class in your struts.xml package:
 
             <source>
-
 &lt;result-types&gt;
     &lt;result-type name="json" class="de.grobmeier.json.plugins.struts2.JsonResult"/&gt;
 &lt;/result-types&gt;
@@ -61,7 +60,6 @@
             Then you can use this result type like that:
 
             <source>
-
 &lt;action name="doSomething" class="de.grobmeier.DoSomething"&gt;
     &lt;result type="json" /&gt;
 &lt;/action&gt;
@@ -73,12 +71,12 @@
 
             <source>
 
-                @JSON
-                class DoSomething {
-                @JSON public String myString = "test";
-                @JSON public String myString2 = "test2";
-                // GETTER necessary like getMyString()
-                }
+@JSON
+class DoSomething {
+@JSON public String myString = "test";
+@JSON public String myString2 = "test2";
+// GETTER necessary like getMyString()
+}
             </source>
 
             This will return {"myString" : "test", "myString2" : "test2"}
@@ -89,10 +87,10 @@
 
             <source>
 
-                @JSON
-                class DoSomething {
-                @JSON public void blub() { return "test"; }
-                }
+@JSON
+class DoSomething {
+@JSON public void blub() { return "test"; }
+}
             </source>
 
             This will return {"blub" : "test"}
