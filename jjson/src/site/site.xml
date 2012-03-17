@@ -21,14 +21,30 @@
     <skin>
         <groupId>org.apache.maven.skins</groupId>
         <artifactId>maven-fluido-skin</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.1</version>
     </skin>
 
-    <version position="left" />
+<custom>
+    <fluidoSkin>
+      <gitHub>
+        <projectId>grobmeier/jjson</projectId>
+        <ribbonOrientation>right</ribbonOrientation>
+        <ribbonColor>black</ribbonColor>
+      </gitHub>
+    </fluidoSkin>
+  </custom>
 
+    <version position="left" />
+    <bannerLeft>
+        <name>JJSON</name>
+        <alt>JJSON</alt>
+        <src>/images/logo.png</src>
+        <href>/index.html</href>        
+    </bannerLeft>
     <body>
+        
         <links>
-          <item name="Google Code" href="http://jjson.googlecode.com" />
+          <item name="GitHub" href="https://github.com/grobmeier/jjson" />
           <item name="CGS" href="http://www.grobmeier.de" />
         </links>
 
