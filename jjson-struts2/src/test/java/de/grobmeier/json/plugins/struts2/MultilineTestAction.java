@@ -26,19 +26,18 @@ public class MultilineTestAction extends ActionSupport {
 	
 	private static final char[] charArray = new char[5];
 	static {
-		
-		int i = 0;
-		charArray[i++] = 'm';
-		charArray[i++] = 'y';
-		charArray[i++] = '\n';
-		charArray[i++] = 'a';
-		charArray[i++] = 'g';
+            int i = 0;
+            charArray[i++] = 'm';
+            charArray[i++] = 'y';
+            charArray[i++] = '\n';
+            charArray[i++] = 'a';
+            charArray[i++] = 'g';
 	}
 	
-	@JSON(encodeLinebreaks = true)
+	@JSON
 	private String test =  new String(charArray);
 	
-	@JSON(replaceLinebreaksWith = "%0A")
+	@JSON
 	private String test2 = "my\nag";
 	
 	public String execute(){

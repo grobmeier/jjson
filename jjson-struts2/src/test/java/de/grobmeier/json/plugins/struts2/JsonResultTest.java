@@ -54,14 +54,13 @@ public class JsonResultTest extends StrutsTestCase {
 		charArray[i++] = 'g';
 		String part1 = new String(charArray);
 		
-		char[] charArray2 = new char[7];
-		
+		char[] charArray2 = new char[6];
+		        
 		i = 0;
 		charArray2[i++] = 'm';
 		charArray2[i++] = 'y';
-		charArray2[i++] = '%';
-		charArray2[i++] = '0';
-		charArray2[i++] = 'A';
+		charArray2[i++] = '\\';
+		charArray2[i++] = 'n';
 		charArray2[i++] = 'a';
 		charArray2[i++] = 'g';
 		String part2 = new String(charArray2);
@@ -69,6 +68,8 @@ public class JsonResultTest extends StrutsTestCase {
 		String executeAction = this.executeAction("/multilinetest");
 		
 		String expected = "{\"test\":\"" + part1 + "\",\"test2\":\"" + part2 + "\"}";
+                System.out.println(expected);
+                System.out.println(executeAction);
 		Assert.assertEquals(expected, executeAction);
 	}
 }
