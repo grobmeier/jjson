@@ -57,8 +57,9 @@
                     <li>Backward compatible Bug fixes bump the patch</li>
                 </ul>
                 
-                Please also see: http://semver.org/
+                <strong>Version before 1.0.0 will not care on backwards compatibility!</strong>
             </p>
+            <p>Please also see: http://semver.org/</p>
         </section>
         
         <section name="License">
