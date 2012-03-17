@@ -257,7 +257,7 @@
                 </site>
                 <repository>
                     <id>grobmeier-stable-repository</id>
-                    <url>scp://grobmeier.de/kunden/homepages/19/d204468537/htdocs/code.grobmeier.de/mvn/snapshot</url>
+                    <url>scp://grobmeier.de/kunden/homepages/19/d204468537/htdocs/code.grobmeier.de/mvn/snapshots</url>
                 </repository>
             </distributionManagement>
         </profile>
