@@ -100,58 +100,6 @@
                 <version>2.3.1</version>
             </plugin>
 
-			<!-- surefire  -->
-            <plugin>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.9</version>
-                <configuration>
-                    <argLine>'-Dfile.encoding=UTF-8'</argLine>
-                </configuration>
-            </plugin>
-			
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-site-plugin</artifactId>
-                <version>3.0</version>
-                <configuration>
-                    <reportPlugins>
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-project-info-reports-plugin</artifactId>
-                            <version>2.4</version>
-                            <reportSets>
-                                <reportSet>
-                                    <reports>
-                                        <report>mailing-list</report>
-                                        <report>license</report>
-                                        <report>issue-tracking</report>
-                                        <report>scm</report>
-                                    </reports>
-                                </reportSet>
-                            </reportSets>
-                        </plugin>
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-checkstyle-plugin</artifactId>
-                            <configuration>
-                                <configLocation>config/sun_checks.xml</configLocation>
-                            </configuration>
-                        </plugin>
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-javadoc-plugin</artifactId>
-                            <version>2.8.1</version>
-                        </plugin>
-                    </reportPlugins>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.apache.maven.wagon</groupId>
-                        <artifactId>wagon-ssh</artifactId>
-                        <version>2.0</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -174,57 +122,6 @@
                     </execution>
                 </executions>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>attach-sources</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.8.1</version>
-                <executions>
-                    <execution>
-                        <id>attach-javadocs</id>
-                        <goals>
-                            <goal>jar</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>sign-artifacts</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>sign</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            
-            <plugin>
-                <artifactId>maven-deploy-plugin</artifactId> 
-                <version>2.7</version> 
-                <dependencies>
-                    <dependency>
-                        <groupId>org.apache.maven.wagon</groupId>
-                        <artifactId>wagon-ssh</artifactId>
-                        <version>2.0</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
             
         </plugins>
     </build>
@@ -243,36 +140,4 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
-    
-    <profiles>
-        <profile>
-            <id>snapshot</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <distributionManagement>
-                <site>
-                    <id>jjson.website</id>
-                    <url>scp://grobmeier.de/kunden/homepages/19/d204468537/htdocs/code.grobmeier.de/jjson-snapshot</url>
-                </site>
-                <repository>
-                    <id>grobmeier-stable-repository</id>
-                    <url>scp://grobmeier.de/kunden/homepages/19/d204468537/htdocs/code.grobmeier.de/mvn/snapshots</url>
-                </repository>
-            </distributionManagement>
-        </profile>
-        <profile>
-            <id>release</id>
-            <distributionManagement>
-                <site>
-                    <id>jjson.website</id>
-                    <url>scp://grobmeier.de/kunden/homepages/19/d204468537/htdocs/code.grobmeier.de/jjson</url>
-                </site>
-                <repository>
-                    <id>grobmeier-stable-repository</id>
-                    <url>scp://grobmeier.de/kunden/homepages/19/d204468537/htdocs/code.grobmeier.de/mvn/stable</url>
-                </repository>
-            </distributionManagement>
-        </profile>
-    </profiles>
 </project>
