@@ -47,5 +47,18 @@
             <p>The struts 2 plugin is pretty new and has the ususal flaws.</p>
         </section>
 
+        <section name="Backwards cmpatibility">
+            <p>
+                Release numbers will have the follow format: <b>major.minor.patch</b>
+                
+                <ul>
+                    <li>Breaking backwards compatibility bumps the major</li>
+                    <li>Backward compatible changes bumps the minor</li>
+                    <li>Backward compatible Bug fixes bump the patch</li>
+                </ul>
+                
+                Please also see: http://semver.org/
+            </p>
+        </section>
     </body>
 </document>
