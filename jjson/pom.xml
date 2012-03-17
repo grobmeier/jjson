@@ -45,12 +45,6 @@
         <connection>scm:git:git://github.com/grobmeier/jjson.git</connection>
         <developerConnection>scm:git:git@github.com:grobmeier/jjson.git</developerConnection>
     </scm>
-    <distributionManagement>
-        <site>
-            <id>jjson.website</id>
-            <url>scp://grobmeier.de/kunden/homepages/19/d204468537/htdocs/code.grobmeier.de/jjson</url>
-        </site>
-    </distributionManagement>
 
     <mailingLists>
         <mailingList>
@@ -205,6 +199,33 @@
                     </execution>
                 </executions>
             </plugin>
+            
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            
+            <plugin>
+                <artifactId>maven-deploy-plugin</artifactId> 
+                <version>2.7</version> 
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.wagon</groupId>
+                        <artifactId>wagon-ssh</artifactId>
+                        <version>2.0</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+            
         </plugins>
     </build>
     <dependencies>
@@ -222,4 +243,38 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
+    
+    <profiles>
+        <profile>
+            <id>snapshot</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <distributionManagement>
+                <site>
+                    <id>jjson.website</id>
+                    <url>scp://grobmeier.de/kunden/homepages/19/d204468537/htdocs/code.grobmeier.de/jjson-snapshot</url>
+                </site>
+                <repository>
+                    <id>grobmeier-stable-repository</id>
+                    <url>scp://grobmeier.de/kunden/homepages/19/d204468537/htdocs/code.grobmeier.de/mvn/snapshot</url>
+                </repository>
+            </distributionManagement>
+        </profile>
+        <profile>
+            <id>release</id>
+            <distributionManagement>
+                <site>
+                    <id>jjson.website</id>
+                    <url>scp://grobmeier.de/kunden/homepages/19/d204468537/htdocs/code.grobmeier.de/jjson</url>
+                </site>
+                <repository>
+                    <id>grobmeier-stable-repository</id>
+                    <url>scp://grobmeier.de/kunden/homepages/19/d204468537/htdocs/code.grobmeier.de/mvn/stable</url>
+                </repository>
+            </distributionManagement>
+        </profile>
+        
+    </profiles>
+    
 </project>
