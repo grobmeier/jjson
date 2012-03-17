@@ -7,5 +7,4 @@ Christian Grobmeier(http://www.grobmeier.de/).
 Contributors are listed in the pom.xml file.
 
 This product uses some code developed by Apache Commons:
-http://commons.apache.org
-You can find that code in the translators package. It has been taken from [lang].
+[lang]: http://commons.apache.org/lang

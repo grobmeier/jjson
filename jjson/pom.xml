@@ -143,8 +143,28 @@
                     </dependency>
                 </dependencies>
             </plugin>
-					
-			
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <relocations>
+                                <relocation>
+                                    <pattern>org.apache.commons.lang</pattern>
+                                    <shadedPattern>de.grobmeier.jjson.shaded.org.apache.commons.lang</shadedPattern>
+                                </relocation>
+                            </relocations>
+                            <minimizeJar>true</minimizeJar>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
     </build>
     <dependencies>
@@ -153,6 +173,13 @@
             <artifactId>junit</artifactId>
             <version>4.4</version>
             <scope>test</scope>
+        </dependency>
+        <!-- is shaded in the release -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.1</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
     <reporting>

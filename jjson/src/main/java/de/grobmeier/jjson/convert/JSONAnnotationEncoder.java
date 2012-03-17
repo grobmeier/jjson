@@ -30,7 +30,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import de.grobmeier.jjson.JSONException;
-import de.grobmeier.jjson.translator.StringEscapeUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 /**
  * 

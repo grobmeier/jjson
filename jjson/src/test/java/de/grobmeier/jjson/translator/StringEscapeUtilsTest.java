@@ -15,6 +15,7 @@
  */
 package de.grobmeier.jjson.translator;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
