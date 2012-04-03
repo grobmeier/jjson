@@ -44,6 +44,8 @@ public class JsonResult extends StrutsResultSupport {
 
 	private boolean commentOutput = true;
 	
+    private String jsonResponse;
+    
 	/** Default constructor */
 	public JsonResult() {
 	}
@@ -84,7 +86,19 @@ public class JsonResult extends StrutsResultSupport {
 		
 		PrintWriter writer = response.getWriter();
 		try {
-			if (!ActionSupport.SUCCESS.equals(invocation.getResultCode())) {
+            if(this.jsonResponse != null) {
+                if (this.commentOutput) {
+                    log.debug("JSON will be served with comments - change with param: outputComment = false ");
+                    writer.write("/* ");
+                    writer.write(this.jsonResponse);
+                    writer.write(" */");
+                } else {
+                    writer.write(this.jsonResponse);
+                }
+                return;
+            }
+
+            if (!ActionSupport.SUCCESS.equals(invocation.getResultCode())) {
 				if(ActionSupport.LOGIN.equals(invocation.getResultCode())) {
 					response.sendError(401, "Not authorized");
 					return;
@@ -99,6 +113,7 @@ public class JsonResult extends StrutsResultSupport {
 				writer.write(new char[] { 'n', 'u', 'l', 'l' }, 0, 4);
 				return;
 			}
+
 			Object obj = invocation.getAction();
 			JSONAnnotationEncoder encoder = new JSONAnnotationEncoder();
 			String result = encoder.encode(obj);
@@ -119,6 +134,14 @@ public class JsonResult extends StrutsResultSupport {
 		}
 	}
 
+    /**
+     * Sets the response for this result. Once the response is set, the actions
+     * will not be serialized anymore.
+     */
+    public void setJsonResponse(String response) {
+        this.jsonResponse = response;
+    }
+    
 	/**
 	 * Set the character set
 	 * 

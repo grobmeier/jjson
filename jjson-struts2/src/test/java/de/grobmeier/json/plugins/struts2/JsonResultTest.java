@@ -72,4 +72,10 @@ public class JsonResultTest extends StrutsTestCase {
                 System.out.println(executeAction);
 		Assert.assertEquals(expected, executeAction);
 	}
+
+    @Test
+    public void testSetJsonResponse() throws Exception {
+        String executeAction = this.executeAction("/test3");
+        Assert.assertEquals("/* {\"hello\":\"world\"} */", executeAction);
+    }
 }

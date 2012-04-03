@@ -46,4 +46,20 @@
 			<result type="json" />
 		</action>
 	</package>
+
+    <package name="globalResponse" extends="struts-default">
+        <result-types>
+            <result-type name="json" class="de.grobmeier.json.plugins.struts2.JsonResult" />
+        </result-types>
+
+        <global-results>
+            <result name="login" type="json">
+                <param name="jsonResponse">{"hello":"world"}</param>
+            </result>
+        </global-results>
+
+        <action name="test3" class="de.grobmeier.json.plugins.struts2.SendToLoginAction">
+            <result type="json" />
+        </action>
+    </package>
 </struts>
