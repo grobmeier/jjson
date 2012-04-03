@@ -44,7 +44,7 @@ public class JsonResult extends StrutsResultSupport {
 
 	private boolean commentOutput = true;
 
-    private boolean allowCrossSiteScripting = true;
+    private boolean allowCrossSiteScripting = false;
 
     private String jsonResponse;
     
@@ -145,6 +145,12 @@ public class JsonResult extends StrutsResultSupport {
         this.jsonResponse = response;
     }
 
+    /**
+     * Flag to disable cross site scripting headers (default = false). Enabling cross site scripting
+     * allows AJAX calls from clients which are not within the server domain.
+     *
+     * @param allowCrossSiteScripting true allows it, false disables it
+     */
     public void setAllowCrossSiteScripting(boolean allowCrossSiteScripting) {
         this.allowCrossSiteScripting = allowCrossSiteScripting;
     }
