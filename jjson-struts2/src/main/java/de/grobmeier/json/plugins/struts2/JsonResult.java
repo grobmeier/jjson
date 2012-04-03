@@ -43,7 +43,9 @@ public class JsonResult extends StrutsResultSupport {
 	private String charSet = "UTF-8";
 
 	private boolean commentOutput = true;
-	
+
+    private boolean allowCrossSiteScripting = true;
+
     private String jsonResponse;
     
 	/** Default constructor */
@@ -79,11 +81,12 @@ public class JsonResult extends StrutsResultSupport {
 		}
 		response.setHeader("Content-Disposition", "inline");
 		
-		// allows crosssite ajax - TODO: should be optional 
-		response.setHeader("Access-Control-Allow-Origin", "*");
-		response.setHeader("Access-Control-Allow-Methods", "POST,GET");
-		response.setHeader("Access-Control-Allow-Credentials", "true");
-		
+		if(this.allowCrossSiteScripting) {
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Access-Control-Allow-Methods", "POST,GET,OPTIONS");
+            response.setHeader("Access-Control-Allow-Credentials", "true");
+        }
+
 		PrintWriter writer = response.getWriter();
 		try {
             if(this.jsonResponse != null) {
@@ -141,7 +144,11 @@ public class JsonResult extends StrutsResultSupport {
     public void setJsonResponse(String response) {
         this.jsonResponse = response;
     }
-    
+
+    public void setAllowCrossSiteScripting(boolean allowCrossSiteScripting) {
+        this.allowCrossSiteScripting = allowCrossSiteScripting;
+    }
+
 	/**
 	 * Set the character set
 	 * 
