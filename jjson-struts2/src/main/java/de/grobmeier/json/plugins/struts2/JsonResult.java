@@ -65,17 +65,10 @@ public class JsonResult extends StrutsResultSupport {
 	@Override
 	protected void doExecute(String finalLocation, ActionInvocation invocation)
 			throws Exception {
-		Charset charset = null;
-		if (charSet != null) {
-			if (Charset.isSupported(charSet)) {
-				charset = Charset.forName(charSet);
-			} else {
-				charset = null;
-			}
-		}
-
 		HttpServletResponse response = (HttpServletResponse) invocation
 				.getInvocationContext().get(HTTP_RESPONSE);
+
+        response.setCharacterEncoding(charSet);
 
 		if (this.commentOutput) {
 			response.setContentType("text/ext-json");
