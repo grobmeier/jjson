@@ -35,12 +35,12 @@ import de.grobmeier.jjson.convert.JSONAnnotationEncoder;
  */
 public class JsonResult extends StrutsResultSupport {
 	/** Serial */
-	private static final long serialVersionUID = 2476992951577523951L;
+    private static final long serialVersionUID = -2615904518029699877L;
 
 	/** Log */
 	private static final Log log = LogFactory.getLog(JsonResult.class);
 
-	private String charSet = "UTF-8";
+    private String charSet = "UTF-8";
 
 	private boolean commentOutput = true;
 
