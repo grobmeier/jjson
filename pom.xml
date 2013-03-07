@@ -5,13 +5,7 @@
     <groupId>de.grobmeier.json</groupId>
     <artifactId>parent</artifactId>
     <version>2-SNAPSHOT</version>
-    <dependencies>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.1</version>
-        </dependency>
-    </dependencies>
+
     <packaging>pom</packaging>
 
     <name>JJSON Multiproject</name>
@@ -24,6 +18,11 @@
         <name>Christian Grobmeier Software</name>
         <url>http:\\www.grobmeier.de</url>
     </organization>
+
+    <modules>
+        <module>jjson</module>
+        <module>jjson-struts2</module>
+    </modules>
 
     <issueManagement>
         <system>GitHub</system>
@@ -189,11 +188,11 @@
             <distributionManagement>
                 <site>
                     <id>jjson.website</id>
-                    <url>scp://grobmeier.de/kunden/homepages/19/d204468537/htdocs/code.grobmeier.de/jjson-snapshot</url>
+                    <url>scp://cgs.aquila.uberspace.de/home/cgs/virtual/code.grobmeier.de/jjson-snapshot</url>
                 </site>
                 <repository>
                     <id>grobmeier-stable-repository</id>
-                    <url>scp://grobmeier.de/kunden/homepages/19/d204468537/htdocs/code.grobmeier.de/mvn/snapshots</url>
+                    <url>scp://cgs.aquila.uberspace.de/home/cgs/virtual/code.grobmeier.de/mvn/snapshots</url>
                 </repository>
             </distributionManagement>
         </profile>
@@ -202,11 +201,11 @@
             <distributionManagement>
                 <site>
                     <id>jjson.website</id>
-                    <url>scp://grobmeier.de/kunden/homepages/19/d204468537/htdocs/code.grobmeier.de/jjson</url>
+                    <url>scp://cgs.aquila.uberspace.de/home/cgs/virtual/code.grobmeier.de/jjson</url>
                 </site>
                 <repository>
                     <id>grobmeier-stable-repository</id>
-                    <url>scp://grobmeier.de/kunden/homepages/19/d204468537/htdocs/code.grobmeier.de/mvn/stable</url>
+                    <url>scp://cgs.aquila.uberspace.de/home/cgs/virtual/code.grobmeier.de/mvn/stable</url>
                 </repository>
             </distributionManagement>
         </profile>
@@ -219,11 +218,11 @@
             <distributionManagement>
                 <site>
                     <id>jjson.website</id>
-                    <url>scp://grobmeier.de/kunden/homepages/19/d204468537/htdocs/code.grobmeier.de/jjson</url>
+                    <url>scp://cgs.aquila.uberspace.de/home/cgs/virtual/code.grobmeier.de/jjson</url>
                 </site>
                 <repository>
                     <id>grobmeier-stable-repository</id>
-                    <url>scp://grobmeier.de/kunden/homepages/19/d204468537/htdocs/code.grobmeier.de/mvn/stable</url>
+                    <url>scp://cgs.aquila.uberspace.de/home/cgs/virtual/code.grobmeier.de/mvn/stable</url>
                 </repository>
             </distributionManagement>
         </profile>
