@@ -21,6 +21,9 @@ import org.junit.Test;
 
 import de.grobmeier.jjson.convert.JSONAnnotationEncoder;
 
+import java.util.Set;
+import java.util.TreeSet;
+
 
 public class JSONAnnotationEncoderTest {
     @Test
@@ -88,6 +91,24 @@ public class JSONAnnotationEncoderTest {
     	JSONAnnotationEncoder encoder = new JSONAnnotationEncoder();
         String json = encoder.encode(c);
         TestCase.assertEquals("{\"value\":\"b[l]u{b}\\\"test\"}", json);
-        System.out.println(json);
+    }
+
+    @Test
+    public void testTreeSet() throws Exception {
+        AnnotatedTreeSetTestClass c = new AnnotatedTreeSetTestClass();
+
+        Set<String> values = new TreeSet<String>();
+        values.add("beta");
+        values.add("alpha");
+        values.add("gamma");
+        values.add("delta");
+        values.add("epsilon");
+
+        c.setValue(values);
+
+        JSONAnnotationEncoder encoder = new JSONAnnotationEncoder();
+        String json = encoder.encode(c);
+
+        TestCase.assertEquals("{\"value\":[\"alpha\",\"beta\",\"delta\",\"epsilon\",\"gamma\"]}", json);
     }
 }

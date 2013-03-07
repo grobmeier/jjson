@@ -15,12 +15,16 @@
  */
 package de.grobmeier.jjson.convert;
 
+import de.grobmeier.jjson.JSONException;
+import org.apache.commons.lang3.StringEscapeUtils;
+
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -28,9 +32,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
-
-import de.grobmeier.jjson.JSONException;
-import org.apache.commons.lang3.StringEscapeUtils;
 
 /**
  * 
@@ -91,11 +92,13 @@ public class JSONAnnotationEncoder {
         } else if(result.getClass().isAssignableFrom(Boolean.class)) {
             encodeBoolean((Boolean)result, builder);
         } else if(hasInterface(result, List.class)) {
-        	encodeList((List<Object>)result, builder);
+        	encodeCollection((Collection<Object>) result, builder);
+        } else if(hasInterface(result, Set.class)) {
+            encodeCollection((Collection<Object>) result, builder);
         } else if(hasInterface(result, Map.class)) {
-        	encodeMap((Map<Object, Object>)result, builder, annotation);
+        	encodeMap((Map<Object, Object>) result, builder, annotation);
         } else if(result.getClass().isAssignableFrom(Date.class)) {
-        	encodeDate((Date)result, builder, annotation);
+        	encodeDate((Date) result, builder, annotation);
         } else if(result.getClass().isArray()) {
         	encodeArray(result, builder);
         } else {
@@ -148,7 +151,7 @@ public class JSONAnnotationEncoder {
     	builder.append(BRACKET_RIGHT);
     }
     
-    private void encodeList(List<Object> result, StringBuilder builder) throws JSONException {
+    private void encodeCollection(Collection<Object> result, StringBuilder builder) throws JSONException {
     	boolean first = true;
     	builder.append(ARRAY_LEFT);
     	for (Iterator<Object> iterator = result.iterator(); iterator.hasNext();) {
@@ -351,14 +354,6 @@ public class JSONAnnotationEncoder {
     }
     
 	private boolean hasInterface(Object target, Class<?> interfaceClass) {
-		Class<?>[] interfaces = target.getClass().getInterfaces();
-		for (int i = 0; i < interfaces.length; i++) {
-			if(interfaceClass.getName().equals(interfaces[i].getName())) {
-				return true;
-			}
-		}
-		return false;
+        return interfaceClass.isInstance(target);
     }
-    
-    
 }
