@@ -15,8 +15,6 @@
  */
 package de.grobmeier.jjson.convert;
 
-import de.grobmeier.jjson.convert.JSON;
-
 @JSON
 public class AnnotatedTestClass {
 	@JSON
