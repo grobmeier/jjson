@@ -91,10 +91,8 @@ public class JSONAnnotationEncoder {
             encodeByte((Byte)result, builder);
         } else if(result.getClass().isAssignableFrom(Boolean.class)) {
             encodeBoolean((Boolean)result, builder);
-        } else if(hasInterface(result, List.class)) {
+        } else if(hasInterface(result, Collection.class)) {
         	encodeCollection((Collection<Object>) result, builder);
-        } else if(hasInterface(result, Set.class)) {
-            encodeCollection((Collection<Object>) result, builder);
         } else if(hasInterface(result, Map.class)) {
         	encodeMap((Map<Object, Object>) result, builder, annotation);
         } else if(result.getClass().isAssignableFrom(Date.class)) {
