@@ -20,12 +20,12 @@
     <parent>
         <artifactId>parent</artifactId>
         <groupId>de.grobmeier.json</groupId>
-        <version>3-SNAPSHOT</version>
+        <version>3</version>
     </parent>
     <groupId>de.grobmeier.json</groupId>
     <artifactId>jjson</artifactId>
     <packaging>jar</packaging>
-    <version>0.1.2-SNAPSHOT</version>
+    <version>0.1.2</version>
     <name>jjson</name>
     <description>
         JJSON is a pure Java lib dealing with JSON. It does not need dependencies and is easy to use.
