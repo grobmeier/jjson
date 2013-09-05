@@ -10,7 +10,7 @@
 
     <groupId>de.grobmeier.json</groupId>
     <artifactId>parent</artifactId>
-    <version>3-SNAPSHOT</version>
+    <version>3</version>
 
     <packaging>pom</packaging>
 
@@ -47,7 +47,8 @@
         <url>https://github.com/grobmeier/jjson</url>
         <connection>scm:git:git://github.com/grobmeier/jjson.git</connection>
         <developerConnection>scm:git:git@github.com:grobmeier/jjson.git</developerConnection>
-    </scm>
+      <tag>parent-3</tag>
+  </scm>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
