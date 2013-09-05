@@ -22,7 +22,7 @@
         <groupId>de.grobmeier.json</groupId>
         <version>3-SNAPSHOT</version>
     </parent>
-    <groupId>de.grobmeier.json</groupId>
+
     <artifactId>jjson</artifactId>
     <packaging>jar</packaging>
     <version>0.1.2-SNAPSHOT</version>

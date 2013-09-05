@@ -6,7 +6,7 @@
         <groupId>de.grobmeier.json</groupId>
         <version>3-SNAPSHOT</version>
     </parent>
-    <groupId>de.grobmeier.json</groupId>
+
     <artifactId>jjson-struts2</artifactId>
     <packaging>jar</packaging>
     <version>0.0.4-SNAPSHOT</version>
@@ -16,14 +16,31 @@
         JJSON-Struts is a ResultType for Struts 2 (acts as plugin).
     </description>
     <url>http://code.grobmeier.de/jjson</url>
+
     <organization>
         <name>Christian Grobmeier Software</name>
         <url>http://www.grobmeier.de</url>
     </organization>
+
+    <developers>
+        <developer>
+            <id>grobmeier</id>
+            <name>Christian Grobmeier</name>
+            <organization>Christian Grobmeier</organization>
+            <organizationUrl>http://www.grobmeier.de/</organizationUrl>
+            <email>grobmeier@gmail.com</email>
+            <url>http://www.grobmeier.de/</url>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </developer>
+    </developers>
+
     <issueManagement>
         <system>GitHub</system>
         <url>https://github.com/grobmeier/jjson/issues</url>
     </issueManagement>
+
     <scm>
         <url>https://github.com/grobmeier/jjson</url>
         <connection>scm:git:git://github.com/grobmeier/jjson.git</connection>
@@ -37,14 +54,14 @@
             <archive>http://groups.google.com/group/jjson-dev</archive>
         </mailingList>
     </mailingLists>
+
     <licenses>
         <license>
             <name>Apache License 2.0</name>
             <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
         </license>
     </licenses>
-    
-    
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <struts2.version>2.2.3</struts2.version>		
