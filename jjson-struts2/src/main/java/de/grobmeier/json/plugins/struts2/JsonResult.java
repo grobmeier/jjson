@@ -15,17 +15,13 @@
  */
 package de.grobmeier.json.plugins.struts2;
 
-import java.io.PrintWriter;
-import java.nio.charset.Charset;
-
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts2.dispatcher.StrutsResultSupport;
-
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.ActionSupport;
-
 import de.grobmeier.jjson.convert.JSONAnnotationEncoder;
+import org.apache.struts2.dispatcher.StrutsResultSupport;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.PrintWriter;
 
 /**
  * 
