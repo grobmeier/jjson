@@ -4,12 +4,12 @@
     <parent>
         <artifactId>parent</artifactId>
         <groupId>de.grobmeier.json</groupId>
-        <version>4-SNAPSHOT</version>
+        <version>5-SNAPSHOT</version>
     </parent>
 
     <artifactId>jjson-struts2</artifactId>
     <packaging>jar</packaging>
-    <version>0.0.5-SNAPSHOT</version>
+    <version>0.0.7-SNAPSHOT</version>
     <name>jjson-struts2</name>
     
     <description>
