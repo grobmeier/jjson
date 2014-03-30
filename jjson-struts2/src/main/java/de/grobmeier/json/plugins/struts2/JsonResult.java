@@ -39,6 +39,10 @@ public class JsonResult extends StrutsResultSupport {
 
     private String jsonResponse;
     
+    private String accessControlAllowOrigin = "*";
+    private String accessControlAllowHeaders = null;
+    private String accessControlAllowMethods = "POST,GET,OPTIONS";
+
 	/** Default constructor */
 	public JsonResult() {
 	}
@@ -73,9 +77,13 @@ public class JsonResult extends StrutsResultSupport {
 		response.setHeader("Content-Disposition", "inline");
 		
 		if(this.allowCrossSiteScripting) {
-            response.setHeader("Access-Control-Allow-Origin", "*");
-            response.setHeader("Access-Control-Allow-Methods", "POST,GET,OPTIONS");
+            response.setHeader("Access-Control-Allow-Origin", accessControlAllowOrigin);
+            response.setHeader("Access-Control-Allow-Methods", accessControlAllowMethods);
             response.setHeader("Access-Control-Allow-Credentials", "true");
+
+            if (this.accessControlAllowHeaders != null) {
+                response.setHeader("Access-Control-Allow-Headers", this.accessControlAllowHeaders);
+            }
         }
 
 		PrintWriter writer = response.getWriter();
@@ -171,4 +179,21 @@ public class JsonResult extends StrutsResultSupport {
 	public void setCommentOutput(boolean commentOutput) {
 		this.commentOutput = commentOutput;
 	}
+
+    /**
+     * Allows this header to be included in a cross browser request
+     * @param value the headers name
+     */
+    public void setAccessControlAllowHeaders(String value) {
+        this.accessControlAllowHeaders = value;
+    }
+
+    public void setAccessControlAllowMethods(String accessControlAllowMethods) {
+        this.accessControlAllowMethods = accessControlAllowMethods;
+    }
+
+    public void setAccessControlAllowOrigin(String accessControlAllowOrigin) {
+        this.accessControlAllowOrigin = accessControlAllowOrigin;
+    }
+
 }
