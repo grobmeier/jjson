@@ -20,8 +20,6 @@ import java.nio.charset.Charset;
 
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.apache.struts2.dispatcher.StrutsResultSupport;
 
 import com.opensymphony.xwork2.ActionInvocation;
@@ -36,9 +34,6 @@ import de.grobmeier.jjson.convert.JSONAnnotationEncoder;
 public class JsonResult extends StrutsResultSupport {
 	/** Serial */
     private static final long serialVersionUID = -2615904518029699877L;
-
-	/** Log */
-	private static final Log log = LogFactory.getLog(JsonResult.class);
 
     private String charSet = "UTF-8";
 
@@ -91,7 +86,6 @@ public class JsonResult extends StrutsResultSupport {
 		try {
             if(this.jsonResponse != null) {
                 if (this.commentOutput) {
-                    log.debug("JSON will be served with comments - change with param: outputComment = false ");
                     writer.write("/* ");
                     writer.write(this.jsonResponse);
                     writer.write(" */");
@@ -120,9 +114,8 @@ public class JsonResult extends StrutsResultSupport {
 			Object obj = invocation.getAction();
 			JSONAnnotationEncoder encoder = new JSONAnnotationEncoder();
 			String result = encoder.encode(obj);
-			log.debug("Encoded JSON: " + result);
+
 			if(this.commentOutput) {
-				log.debug("JSON will be served with comments - change with param: outputComment = false ");
 				writer.write("/* ");
 				writer.write(result);
 				writer.write(" */");
