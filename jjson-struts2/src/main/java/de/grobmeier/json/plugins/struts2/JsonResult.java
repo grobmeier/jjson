@@ -34,14 +34,18 @@ public class JsonResult extends StrutsResultSupport {
     private String charSet = "UTF-8";
 
 	private boolean commentOutput = true;
+    private boolean commentAngularStyle = false;
 
     private boolean allowCrossSiteScripting = false;
 
     private String jsonResponse;
-    
+
     private String accessControlAllowOrigin = "*";
     private String accessControlAllowHeaders = null;
     private String accessControlAllowMethods = "POST,GET,OPTIONS";
+
+    private String commentPrefix = "/* ";
+    private String commentSuffix = " */";
 
 	/** Default constructor */
 	public JsonResult() {
@@ -90,9 +94,9 @@ public class JsonResult extends StrutsResultSupport {
 		try {
             if(this.jsonResponse != null) {
                 if (this.commentOutput) {
-                    writer.write("/* ");
+                    writer.write(commentPrefix);
                     writer.write(this.jsonResponse);
-                    writer.write(" */");
+                    writer.write(commentSuffix);
                 } else {
                     writer.write(this.jsonResponse);
                 }
@@ -120,9 +124,9 @@ public class JsonResult extends StrutsResultSupport {
 			String result = encoder.encode(obj);
 
 			if(this.commentOutput) {
-				writer.write("/* ");
+				writer.write(commentPrefix);
 				writer.write(result);
-				writer.write(" */");
+				writer.write(commentSuffix);
 			} else {
 				writer.write(result);
 			}
@@ -196,4 +200,23 @@ public class JsonResult extends StrutsResultSupport {
         this.accessControlAllowOrigin = accessControlAllowOrigin;
     }
 
+    public void setCommentAngularStyle(boolean angularStyle) {
+        this.commentAngularStyle = angularStyle;
+
+        if (angularStyle) {
+            this.commentPrefix = ")]}',\n";
+            this.commentSuffix = "";
+        } else {
+            this.commentPrefix = "/* ";
+            this.commentSuffix = " */";
+        }
+    }
+
+    public void setCommentPrefix(String commentPrefix) {
+        this.commentPrefix = commentPrefix;
+    }
+
+    public void setCommentSuffix(String commentSuffix) {
+        this.commentSuffix = commentSuffix;
+    }
 }
