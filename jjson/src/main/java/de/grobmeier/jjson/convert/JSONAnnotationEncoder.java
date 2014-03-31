@@ -16,6 +16,7 @@
 package de.grobmeier.jjson.convert;
 
 import de.grobmeier.jjson.JSONException;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 
 import java.lang.annotation.Annotation;
@@ -176,30 +177,32 @@ public class JSONAnnotationEncoder {
         
         builder.append(BRACKET_LEFT);
         
-        serializeFields(c, builder);
-        serializeMethods(c, builder);
+        int count = serializeFields(c, builder);
+        serializeMethods(c, builder, count);
         builder.append(BRACKET_RIGHT);
         return builder.toString();
     }
 
-	private void serializeFields(Object c, StringBuilder builder)
+	private int serializeFields(Object c, StringBuilder builder)
 			throws JSONException {
+        Field[] fields = ArrayUtils.addAll(c.getClass().getDeclaredFields(), c.getClass().getFields());
+
+        int count = 0;
 		boolean first = true;
-        Field[] fields = c.getClass().getDeclaredFields();
         for (Field field : fields) {
             Annotation[] anons = field.getAnnotations();
             for (Annotation annotation : anons) {
-                if(annotation.annotationType().isAssignableFrom(JSON.class)) {
-                    if(!first) {
+                if (annotation.annotationType().isAssignableFrom(JSON.class)) {
+                    if (!first) {
                         builder.append(COMMA);
                     } else {
                         first = false;
                     }
-                    
+
                     String methodName = null;
                     // primitive boolean getters have is as prefix
                     // Use class.getComponentType instead of this
-                    if(PRIMITIVE_BOOLEAN.equals(field.getType().toString())) {
+                    if (PRIMITIVE_BOOLEAN.equals(field.getType().toString())) {
                         methodName = JSONReflectionUtils.createGetter(field.getName(), JSONReflectionUtils.IS);
                     } else {
                         methodName = JSONReflectionUtils.createGetter(field.getName(), JSONReflectionUtils.GET);
@@ -208,10 +211,12 @@ public class JSONAnnotationEncoder {
                     try {
                         Method method = c.getClass().getMethod(methodName, (Class[])null);
                         Object result = method.invoke(c, (Object[])null);
-                        
+
                         encodeString(field.getName(), builder, (JSON)annotation);
                         builder.append(COLON);
                         encode(result, builder, (JSON)annotation);
+
+                        count++;
                     } catch (SecurityException e) {
                         throw new JSONException(e);
                     } catch (NoSuchMethodException e) {
@@ -226,11 +231,14 @@ public class JSONAnnotationEncoder {
                 }
             }
         }
+
+        return count;
 	}
-	
-	private void serializeMethods(Object c, StringBuilder builder) throws JSONException {
-		boolean first = true;
-		Method[] methods = c.getClass().getDeclaredMethods();
+
+	private void serializeMethods(Object c, StringBuilder builder, int count) throws JSONException {
+		boolean first = (count == 0);
+
+        Method[] methods = ArrayUtils.addAll(c.getClass().getDeclaredMethods(), c.getClass().getMethods());
 		for (Method method : methods) {
 		    Annotation[] anons = method.getAnnotations();
 		    for (Annotation annotation : anons) {

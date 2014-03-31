@@ -111,4 +111,17 @@ public class JSONAnnotationEncoderTest {
 
         TestCase.assertEquals("{\"value\":[\"alpha\",\"beta\",\"delta\",\"epsilon\",\"gamma\"]}", json);
     }
+
+    @Test
+    public void testExtension() throws Exception {
+        ExtendAnnotatedClass extend = new ExtendAnnotatedClass();
+        extend.setTest("HALLO");
+        extend.setTest1("WELT");
+        extend.setTest2(true);
+        extend.setTest3(false);
+        JSONAnnotationEncoder encoder = new JSONAnnotationEncoder();
+        String json = encoder.encode(extend);
+        TestCase.assertEquals("{\"test\":\"HALLO\",\"test1\":\"WELT\",\"test3\":false}", json);
+    }
+
 }
