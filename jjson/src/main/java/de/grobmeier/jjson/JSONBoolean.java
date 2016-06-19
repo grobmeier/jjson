@@ -19,7 +19,7 @@ public class JSONBoolean implements JSONValue {
     /** JSONBoolean Object with the value true */
     public final static JSONBoolean TRUE = new JSONBoolean(true);
     /** JSONBoolean Object with the value false */
-    public final static JSONBoolean FALSE = new JSONBoolean(true);
+    public final static JSONBoolean FALSE = new JSONBoolean(false);
     
     /* value of this object */
     private boolean value = false;
