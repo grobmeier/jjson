@@ -128,7 +128,7 @@ public class JSONAnnotationEncoderTest {
         JSONAnnotationEncoder encoder = new JSONAnnotationEncoder();
         String json = encoder.encode(clazz);
 
-        System.out.println(json);
+        TestCase.assertEquals("{\"value\":\"myvalue\",\"someOtherValue\":\"other\"}", json);
     }
 
 }
