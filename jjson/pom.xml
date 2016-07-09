@@ -25,7 +25,7 @@
 
     <artifactId>jjson</artifactId>
     <packaging>jar</packaging>
-    <version>0.1.8-SNAPSHOT</version>
+    <version>0.1.7-SNAPSHOT</version>
     <name>jjson</name>
     <description>
         JJSON is a pure Java lib dealing with JSON. It does not need dependencies and is easy to use.
