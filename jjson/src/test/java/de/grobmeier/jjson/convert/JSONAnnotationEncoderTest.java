@@ -119,7 +119,16 @@ public class JSONAnnotationEncoderTest {
         extend.setTest3(false);
         JSONAnnotationEncoder encoder = new JSONAnnotationEncoder();
         String json = encoder.encode(extend);
-        TestCase.assertEquals("{\"test\":\"HALLO\",\"test1\":\"WELT\",\"test3\":false}", json);
+        TestCase.assertEquals("{\"test\":\"HALLO\",\"test1\":\"WELT\",\"test2\":true,\"test3\":false}", json);
+    }
+
+    @Test
+    public void testMethodEncoding() throws Exception {
+        AnnotatedMethodsInClass clazz = new AnnotatedMethodsInClass();
+        JSONAnnotationEncoder encoder = new JSONAnnotationEncoder();
+        String json = encoder.encode(clazz);
+
+        System.out.println(json);
     }
 
 }

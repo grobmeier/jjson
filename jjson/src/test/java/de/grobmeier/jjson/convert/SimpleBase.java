@@ -23,7 +23,6 @@ public class SimpleBase {
 	@JSON
     private boolean test2 = false;
     
-	@JSON
     private Boolean test3 = false;
 
     public String getTest1() {
