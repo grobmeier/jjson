@@ -20,7 +20,7 @@
     <parent>
         <artifactId>parent</artifactId>
         <groupId>de.grobmeier.json</groupId>
-        <version>7-SNAPSHOT</version>
+        <version>6</version>
     </parent>
 
     <artifactId>jjson</artifactId>
