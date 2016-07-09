@@ -60,6 +60,10 @@ public class JSONObjectTest {
         object = new JSONObject();
         object.put("bool", JSONBoolean.TRUE);
         TestCase.assertEquals("{\"bool\":true}",object.toJSON());
+
+        object = new JSONObject();
+        object.put("bool", JSONBoolean.FALSE);
+        TestCase.assertEquals("{\"bool\":false}",object.toJSON());
         
         JSONObject o = new JSONObject();
         o.put("my", new JSONNumber(14440.123E+5));
