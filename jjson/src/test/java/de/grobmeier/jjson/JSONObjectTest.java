@@ -17,7 +17,10 @@ package de.grobmeier.jjson;
 
 import junit.framework.TestCase;
 
+import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.Map;
 
 /**
  * 
@@ -36,10 +39,10 @@ public class JSONObjectTest {
         object = new JSONObject();
         object.put("mykey", new JSONString("myvalue"));
         object.put("mykey2", new JSONString("myvalue2"));
-        TestCase.assertEquals(
-                "{\"mykey\":\"myvalue\",\"mykey2\":\"myvalue2\"}",object.toJSON());
-        
-        
+
+        Assert.assertEquals("\"myvalue\"", object.getValue().get("mykey").toJSON());
+        Assert.assertEquals("\"myvalue2\"", object.getValue().get("mykey2").toJSON());
+
         object = new JSONObject();
         JSONObject object2 = new JSONObject();
         object2.put("objykey", new JSONString("objvalue"));

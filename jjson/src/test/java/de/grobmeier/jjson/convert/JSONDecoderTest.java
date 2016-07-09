@@ -15,12 +15,16 @@
  */
 package de.grobmeier.jjson.convert;
 
-import junit.framework.TestCase;
+import de.grobmeier.jjson.JSONObject;
 
+import junit.framework.TestCase;
+import org.junit.Assert;
 import org.junit.Test;
 
 import de.grobmeier.jjson.JSONValue;
 import de.grobmeier.jjson.convert.JSONDecoder;
+
+import java.util.Map;
 
 public class JSONDecoderTest {
     @Test
@@ -125,10 +129,13 @@ public class JSONDecoderTest {
     public final void testDecodeObject4() {
         JSONDecoder decoder = 
             new JSONDecoder("{\"key\":\"value\",\"key2\":{\"key3\":\"value2\"},\"key5\":true}");
-        JSONValue result = decoder.decode();
-        TestCase.assertEquals(
-                "{\"key5\":true,\"key2\":{\"key3\":\"value2\"},\"key\":\"value\"}", 
-                result.toJSON());
+        JSONObject result = (JSONObject)decoder.decode();
+
+        Map<String, JSONValue> value = result.getValue();
+
+        Assert.assertEquals("{\"key3\":\"value2\"}", value.get("key2").toJSON());
+        Assert.assertEquals("true", value.get("key5").toJSON());
+        Assert.assertEquals("\"value\"", value.get("key").toJSON());
     }
     
     @Test
