@@ -33,7 +33,7 @@
     <url>http://code.grobmeier.de/jjson</url>
     <organization>
         <name>Christian Grobmeier Software</name>
-        <url>http://www.grobmeier.de</url>
+        <url>https://www.grobmeier.de</url>
     </organization>
     <issueManagement>
         <system>GitHub</system>
@@ -43,8 +43,8 @@
         <url>https://github.com/grobmeier/jjson</url>
         <connection>scm:git:git://github.com/grobmeier/jjson.git</connection>
         <developerConnection>scm:git:git@github.com:grobmeier/jjson.git</developerConnection>
-      <tag>HEAD</tag>
-  </scm>
+        <tag>HEAD</tag>
+    </scm>
 
     <mailingLists>
         <mailingList>
@@ -65,9 +65,9 @@
             <id>grobmeier</id>
             <name>Christian Grobmeier</name>
             <organization>Christian Grobmeier</organization>
-            <organizationUrl>http://www.grobmeier.de/</organizationUrl>
+            <organizationUrl>https://www.grobmeier.de/</organizationUrl>
             <email>grobmeier@gmail.com</email>
-            <url>http://www.grobmeier.de/</url>
+            <url>https://www.grobmeier.de/</url>
             <roles>
                 <role>Developer</role>
             </roles>
