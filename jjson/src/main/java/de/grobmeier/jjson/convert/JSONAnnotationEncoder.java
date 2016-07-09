@@ -18,6 +18,8 @@ package de.grobmeier.jjson.convert;
 import de.grobmeier.jjson.JSONException;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.reflect.FieldUtils;
+import org.apache.commons.lang3.reflect.MethodUtils;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Array;
@@ -185,7 +187,7 @@ public class JSONAnnotationEncoder {
 
 	private int serializeFields(Object c, StringBuilder builder)
 			throws JSONException {
-        Field[] fields = ArrayUtils.addAll(c.getClass().getDeclaredFields(), c.getClass().getFields());
+		Field[] fields = FieldUtils.getFieldsWithAnnotation(c.getClass(), JSON.class);
 
         int count = 0;
 		boolean first = true;
@@ -199,7 +201,7 @@ public class JSONAnnotationEncoder {
                         first = false;
                     }
 
-                    String methodName = null;
+                    String methodName;
                     // primitive boolean getters have is as prefix
                     // Use class.getComponentType instead of this
                     if (PRIMITIVE_BOOLEAN.equals(field.getType().toString())) {
@@ -238,7 +240,8 @@ public class JSONAnnotationEncoder {
 	private void serializeMethods(Object c, StringBuilder builder, int count) throws JSONException {
 		boolean first = (count == 0);
 
-        Method[] methods = ArrayUtils.addAll(c.getClass().getDeclaredMethods(), c.getClass().getMethods());
+		Method[] methods = MethodUtils.getMethodsWithAnnotation(c.getClass(), JSON.class);
+
 		for (Method method : methods) {
 		    Annotation[] anons = method.getAnnotations();
 		    for (Annotation annotation : anons) {
