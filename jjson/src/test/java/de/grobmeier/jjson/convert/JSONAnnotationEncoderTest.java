@@ -72,8 +72,6 @@ public class JSONAnnotationEncoderTest {
 		
 		String part1 = new String(charArray);
 		
-		System.out.println(part1);
-		System.out.println(json);
 		TestCase.assertEquals(part1, json);
     }
     
