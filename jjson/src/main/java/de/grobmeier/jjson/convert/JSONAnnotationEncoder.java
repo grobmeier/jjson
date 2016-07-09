@@ -70,9 +70,10 @@ public class JSONAnnotationEncoder {
     }
     
     /**
-     * @param builder
-     * @param result
-     * @throws JSONException
+     * @param builder the builder object
+     * @param result the result object
+	 * @param annotation the json annotation
+     * @throws JSONException when an error occurs
      */
     @SuppressWarnings("unchecked")
 	public void encode(Object result, StringBuilder builder, JSON annotation) throws JSONException {

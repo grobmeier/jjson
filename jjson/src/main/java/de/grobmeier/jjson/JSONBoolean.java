@@ -31,9 +31,6 @@ public class JSONBoolean implements JSONValue {
         return value;
     }
 
-    /**
-     * @param value
-     */
     public JSONBoolean(boolean value) {
         this.value = value;
     }

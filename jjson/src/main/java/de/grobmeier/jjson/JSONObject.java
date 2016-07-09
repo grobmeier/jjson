@@ -31,10 +31,6 @@ public class JSONObject implements JSONValue {
     public JSONObject() {
     }
     
-    /**
-     * @param key
-     * @param value
-     */
     public void put(final String key, JSONValue value) {
         if(value == null) {
             value = JSONNull.NULL;

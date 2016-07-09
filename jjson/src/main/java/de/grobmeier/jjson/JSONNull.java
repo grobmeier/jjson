@@ -29,10 +29,6 @@ public class JSONNull implements JSONValue {
         // no values
     }
     
-    /**
-     * (non-Javadoc)
-     * @see org.apache.commons.json.JSONValue#toJSON()
-     */
     public String toJSON() {
         return "null";
     }

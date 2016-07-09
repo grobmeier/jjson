@@ -37,24 +37,14 @@ public class JSONArray implements JSONValue {
         values.add(value);
     }
     
-    /**
-     * @return the values
-     */
     public List<JSONValue> getValue() {
         return values;
     }
 
-    /**
-     * @param values the values to set
-     */
     public void setValues(List<JSONValue> values) {
         this.values = values;
     }
 
-    /**
-     * (non-Javadoc)
-     * @see org.apache.commons.json.JSONValue#toJSON()
-     */
     public String toJSON() {
         StringBuffer result = new StringBuffer();
         result.append("[");

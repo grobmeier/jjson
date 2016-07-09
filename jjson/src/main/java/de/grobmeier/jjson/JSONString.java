@@ -20,16 +20,10 @@ package de.grobmeier.jjson;
 public class JSONString implements JSONValue {
     private StringBuffer buffer = new StringBuffer();
     
-    /**
-     * @param value
-     */
     public JSONString(final String value) {
         buffer.append(value);
     }
 
-    /**
-     * @param append
-     */
     public void append(final String append) {
         buffer.append(append);
     }
@@ -41,10 +35,6 @@ public class JSONString implements JSONValue {
         return buffer;
     }
 
-    /**
-     * (non-Javadoc)
-     * @see org.apache.commons.json.JSONValue#toJSON()
-     */
     public String toJSON() {
         StringBuffer result = new StringBuffer();
         result.append("\"");

@@ -36,8 +36,9 @@ public class JSONDecoder {
         NumberFormat.getInstance(Locale.ENGLISH);
     
     private JSONReader reader = null;
+
     /**
-     * 
+     * @param json the json string
      */
     public JSONDecoder(final String json) {
         reader = new JSONReader(json);

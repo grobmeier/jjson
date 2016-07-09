@@ -28,30 +28,18 @@ public class JSONNumber implements JSONValue {
        this.value = Double.toString(value); 
     }
     
-    /**
-     * @param value
-     */
     public JSONNumber(String value) {
         this.value = value;
     }
     
-    /**
-     * @param value
-     */
     public JSONNumber(long value) {
         this.value = Long.toString(value);
     }
     
-    /**
-     * @param value
-     */
     public JSONNumber(float value) {
         this.value = Float.toString(value);
     }
 
-    /**
-     * @param value
-     */
     public JSONNumber(BigDecimal value) {
         this.value = value.toPlainString(); 
     }
@@ -59,8 +47,7 @@ public class JSONNumber implements JSONValue {
     public JSONNumber(int value) {
         this.value = Integer.toString(value);
     }
-    
-    
+
     /**
      * @return the value
      */
@@ -68,10 +55,6 @@ public class JSONNumber implements JSONValue {
         return value;
     }
 
-    /**
-     * (non-Javadoc)
-     * @see org.apache.commons.json.JSONValue#toJSON()
-     */
     public String toJSON() {
         return value;
     }
