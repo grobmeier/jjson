@@ -192,46 +192,45 @@ public class JSONAnnotationEncoder {
         int count = 0;
 		boolean first = true;
         for (Field field : fields) {
-            Annotation[] anons = field.getAnnotations();
-            for (Annotation annotation : anons) {
-                if (annotation.annotationType().isAssignableFrom(JSON.class)) {
-                    if (!first) {
-                        builder.append(COMMA);
-                    } else {
-                        first = false;
-                    }
+			JSON annotation = field.getAnnotation(JSON.class);
 
-                    String methodName;
-                    // primitive boolean getters have is as prefix
-                    // Use class.getComponentType instead of this
-                    if (PRIMITIVE_BOOLEAN.equals(field.getType().toString())) {
-                        methodName = JSONReflectionUtils.createGetter(field.getName(), JSONReflectionUtils.IS);
-                    } else {
-                        methodName = JSONReflectionUtils.createGetter(field.getName(), JSONReflectionUtils.GET);
-                    }
+			if (!first) {
+				builder.append(COMMA);
+			} else {
+				first = false;
+			}
 
-                    try {
-                        Method method = c.getClass().getMethod(methodName, (Class[])null);
-                        Object result = method.invoke(c, (Object[])null);
+			String methodName;
+			// primitive boolean getters have is as prefix
+			// Use class.getComponentType instead of this
+			if (PRIMITIVE_BOOLEAN.equals(field.getType().toString())) {
+				methodName = JSONReflectionUtils.createGetter(field.getName(), JSONReflectionUtils.IS);
+			} else {
+				methodName = JSONReflectionUtils.createGetter(field.getName(), JSONReflectionUtils.GET);
+			}
 
-                        encodeString(field.getName(), builder, (JSON)annotation);
-                        builder.append(COLON);
-                        encode(result, builder, (JSON)annotation);
+			try {
+				Method method = c.getClass().getMethod(methodName, (Class[])null);
+				Object result = method.invoke(c, (Object[])null);
 
-                        count++;
-                    } catch (SecurityException e) {
-                        throw new JSONException(e);
-                    } catch (NoSuchMethodException e) {
-                        throw new JSONException("No appropriate getter found: " + methodName ,e);
-                    } catch (IllegalArgumentException e) {
-                        throw new JSONException(e);
-                    } catch (IllegalAccessException e) {
-                        throw new JSONException(e);
-                    } catch (InvocationTargetException e) {
-                        throw new JSONException(e);
-                    }
-                }
-            }
+				encodeString(field.getName(), builder, annotation);
+				builder.append(COLON);
+				encode(result, builder, annotation);
+
+				count++;
+			} catch (SecurityException e) {
+				throw new JSONException(e);
+			} catch (NoSuchMethodException e) {
+				throw new JSONException("No appropriate getter found: " + methodName ,e);
+			} catch (IllegalArgumentException e) {
+				throw new JSONException(e);
+			} catch (IllegalAccessException e) {
+				throw new JSONException(e);
+			} catch (InvocationTargetException e) {
+				throw new JSONException(e);
+			}
+
+
         }
 
         return count;
@@ -243,40 +242,37 @@ public class JSONAnnotationEncoder {
 		Method[] methods = MethodUtils.getMethodsWithAnnotation(c.getClass(), JSON.class);
 
 		for (Method method : methods) {
-		    Annotation[] anons = method.getAnnotations();
-		    for (Annotation annotation : anons) {
-		        if(annotation.annotationType().isAssignableFrom(JSON.class)) {
-		            if(!first) {
-		                builder.append(COMMA);
-		            } else {
-		                first = false;
-		            }
-		           
-		            try {
-		                Object result = method.invoke(c, (Object[])null);
-		                String name = method.getName();
-		                if(name.startsWith("is")) {
-		                	name = name.replaceFirst("is", "");
-		                	name = name.substring(0, 1).toLowerCase() + name.substring(1);
-		                }
-		                if(name.startsWith("get")) {
-		                	name = name.replaceFirst("get", "");
-		                	name = name.substring(0, 1).toLowerCase() + name.substring(1);
-		                }
-		                encodeString(name, builder, (JSON)annotation);
-		                builder.append(COLON);
-		                encode(result, builder, (JSON)annotation);
-		            } catch (SecurityException e) {
-		                throw new JSONException(e);
-		            } catch (IllegalArgumentException e) {
-		                throw new JSONException(e);
-		            } catch (IllegalAccessException e) {
-		                throw new JSONException(e);
-		            } catch (InvocationTargetException e) {
-		                throw new JSONException(e);
-		            }
-		        }
-		    }
+		    Annotation annotation = method.getAnnotation(JSON.class);
+
+			if(!first) {
+				builder.append(COMMA);
+			} else {
+				first = false;
+			}
+
+			try {
+				Object result = method.invoke(c, (Object[])null);
+				String name = method.getName();
+				if(name.startsWith("is")) {
+					name = name.replaceFirst("is", "");
+					name = name.substring(0, 1).toLowerCase() + name.substring(1);
+				}
+				if(name.startsWith("get")) {
+					name = name.replaceFirst("get", "");
+					name = name.substring(0, 1).toLowerCase() + name.substring(1);
+				}
+				encodeString(name, builder, (JSON)annotation);
+				builder.append(COLON);
+				encode(result, builder, (JSON)annotation);
+			} catch (SecurityException e) {
+				throw new JSONException(e);
+			} catch (IllegalArgumentException e) {
+				throw new JSONException(e);
+			} catch (IllegalAccessException e) {
+				throw new JSONException(e);
+			} catch (InvocationTargetException e) {
+				throw new JSONException(e);
+			}
 		}
 	}
 
