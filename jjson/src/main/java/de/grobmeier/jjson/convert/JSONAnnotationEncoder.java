@@ -30,6 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -68,6 +69,30 @@ public class JSONAnnotationEncoder {
        encode(result, builder, null);
        return builder.toString();
     }
+
+    private void encode(Object result, StringBuilder builder, JSON annotation,
+            Map<Object, Boolean> stack) throws JSONException {
+        if (result == null) {
+            builder.append(NULL);
+            return;
+        }
+
+        boolean tracked = shouldTrack(result);
+        if (tracked) {
+            if (stack.containsKey(result)) {
+                throw new JSONException("Cyclic object graph cannot be encoded as JSON");
+            }
+            stack.put(result, Boolean.TRUE);
+        }
+
+        try {
+            encodeValue(result, builder, annotation, stack);
+        } finally {
+            if (tracked) {
+                stack.remove(result);
+            }
+        }
+    }
     
     /**
      * @param builder the builder object
@@ -77,6 +102,12 @@ public class JSONAnnotationEncoder {
      */
     @SuppressWarnings("unchecked")
 	public void encode(Object result, StringBuilder builder, JSON annotation) throws JSONException {
+        encode(result, builder, annotation, new IdentityHashMap<Object, Boolean>());
+    }
+
+    @SuppressWarnings("unchecked")
+    private void encodeValue(Object result, StringBuilder builder, JSON annotation,
+            Map<Object, Boolean> stack) throws JSONException {
     	if(result == null) {
     		builder.append(NULL);
     	} else if(result.getClass().isAssignableFrom(String.class)) {
@@ -96,26 +127,27 @@ public class JSONAnnotationEncoder {
         } else if(result.getClass().isAssignableFrom(Boolean.class)) {
             encodeBoolean((Boolean)result, builder);
         } else if(hasInterface(result, Collection.class)) {
-        	encodeCollection((Collection<Object>) result, builder);
+        	encodeCollection((Collection<Object>) result, builder, stack);
         } else if(hasInterface(result, Map.class)) {
-        	encodeMap((Map<Object, Object>) result, builder, annotation);
+        	encodeMap((Map<Object, Object>) result, builder, annotation, stack);
         } else if(result.getClass().isAssignableFrom(Date.class)) {
         	encodeDate((Date) result, builder, annotation);
         } else if(result.getClass().isArray()) {
-        	encodeArray(result, builder);
+        	encodeArray(result, builder, stack);
         } else {
-            encodeObject(result, builder);
+            encodeObject(result, builder, stack);
         }
     }
     
-    private void encodeArray(Object result, StringBuilder builder) throws JSONException {
+    private void encodeArray(Object result, StringBuilder builder, Map<Object, Boolean> stack)
+            throws JSONException {
     	builder.append(ARRAY_LEFT);
     	int length = Array.getLength(result);
     	for (int i = 0; i < length; i++) {
     		if(i > 0) {
                 builder.append(COMMA);
             }
-			encode(Array.get(result, i), builder, null);
+			encode(Array.get(result, i), builder, null, stack);
 		}
     	builder.append(ARRAY_RIGHT);
 	}
@@ -135,7 +167,8 @@ public class JSONAnnotationEncoder {
     	
     }
     
-    private void encodeMap(Map<Object, Object> result, StringBuilder builder, JSON annotation) throws JSONException {
+    private void encodeMap(Map<Object, Object> result, StringBuilder builder, JSON annotation,
+            Map<Object, Boolean> stack) throws JSONException {
     	boolean first = true;
     	builder.append(BRACKET_LEFT);
     	Set<Entry<Object, Object>> entries = result.entrySet();
@@ -148,12 +181,13 @@ public class JSONAnnotationEncoder {
 			Entry<Object, Object> entry = (Entry<Object, Object>) iterator.next();
 			encodeString(entry.getKey().toString(), builder, annotation);
 			builder.append(COLON);
-			encode(entry.getValue(), builder,null);
+			encode(entry.getValue(), builder, null, stack);
 		}
     	builder.append(BRACKET_RIGHT);
     }
     
-    private void encodeCollection(Collection<Object> result, StringBuilder builder) throws JSONException {
+    private void encodeCollection(Collection<Object> result, StringBuilder builder,
+            Map<Object, Boolean> stack) throws JSONException {
     	boolean first = true;
     	builder.append(ARRAY_LEFT);
     	for (Iterator<Object> iterator = result.iterator(); iterator.hasNext();) {
@@ -164,12 +198,13 @@ public class JSONAnnotationEncoder {
              }
     		 
 			Object object = iterator.next();
-			encode(object, builder, null);
+			encode(object, builder, null, stack);
 		}
     	builder.append(ARRAY_RIGHT);
 	}
 
-	private String encodeObject(Object c, StringBuilder builder) throws JSONException {
+	private String encodeObject(Object c, StringBuilder builder, Map<Object, Boolean> stack)
+            throws JSONException {
 		if(c == null) {
 			return NULL;
 		}
@@ -180,13 +215,13 @@ public class JSONAnnotationEncoder {
         
         builder.append(BRACKET_LEFT);
         
-        int count = serializeFields(c, builder);
-        serializeMethods(c, builder, count);
+        int count = serializeFields(c, builder, stack);
+        serializeMethods(c, builder, count, stack);
         builder.append(BRACKET_RIGHT);
         return builder.toString();
     }
 
-	private int serializeFields(Object c, StringBuilder builder)
+	private int serializeFields(Object c, StringBuilder builder, Map<Object, Boolean> stack)
 			throws JSONException {
 		Field[] fields = FieldUtils.getFieldsWithAnnotation(c.getClass(), JSON.class);
 
@@ -216,7 +251,7 @@ public class JSONAnnotationEncoder {
 
 				encodeString(field.getName(), builder, annotation);
 				builder.append(COLON);
-				encode(result, builder, annotation);
+				encode(result, builder, annotation, stack);
 
 				count++;
 			} catch (SecurityException e) {
@@ -237,7 +272,8 @@ public class JSONAnnotationEncoder {
         return count;
 	}
 
-	private void serializeMethods(Object c, StringBuilder builder, int count) throws JSONException {
+	private void serializeMethods(Object c, StringBuilder builder, int count, Map<Object, Boolean> stack)
+            throws JSONException {
 		boolean first = (count == 0);
 
 		Method[] methods = MethodUtils.getMethodsWithAnnotation(c.getClass(), JSON.class);
@@ -264,7 +300,7 @@ public class JSONAnnotationEncoder {
 				}
 				encodeString(name, builder, (JSON)annotation);
 				builder.append(COLON);
-				encode(result, builder, (JSON)annotation);
+				encode(result, builder, (JSON)annotation, stack);
 			} catch (SecurityException e) {
 				throw new JSONException(e);
 			} catch (IllegalArgumentException e) {
@@ -361,5 +397,12 @@ public class JSONAnnotationEncoder {
     
 	private boolean hasInterface(Object target, Class<?> interfaceClass) {
         return interfaceClass.isInstance(target);
+    }
+
+    private boolean shouldTrack(Object target) {
+        return target.getClass().isArray()
+                || hasInterface(target, Collection.class)
+                || hasInterface(target, Map.class)
+                || target.getClass().getAnnotation(JSON.class) != null;
     }
 }
