@@ -22,7 +22,9 @@ import org.junit.Test;
 
 import de.grobmeier.jjson.convert.JSONAnnotationEncoder;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -156,4 +158,14 @@ public class JSONAnnotationEncoderTest {
         JSONAnnotationEncoder encoder = new JSONAnnotationEncoder();
         encoder.encode(map);
     }
+
+    @Test(expected = JSONException.class)
+    public void testSelfReferencingListThrowsJSONException() throws Exception {
+        List<Object> list = new ArrayList<Object>();
+        list.add(list);
+
+        JSONAnnotationEncoder encoder = new JSONAnnotationEncoder();
+        encoder.encode(list);
+    }
+
 }
