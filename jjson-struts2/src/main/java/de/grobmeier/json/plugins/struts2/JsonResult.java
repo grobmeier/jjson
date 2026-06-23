@@ -18,7 +18,7 @@ package de.grobmeier.json.plugins.struts2;
 import com.opensymphony.xwork2.ActionInvocation;
 import com.opensymphony.xwork2.ActionSupport;
 import de.grobmeier.jjson.convert.JSONAnnotationEncoder;
-import org.apache.struts2.dispatcher.StrutsResultSupport;
+import org.apache.struts2.result.StrutsResultSupport;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;

@@ -17,7 +17,7 @@ package de.grobmeier.json.plugins.struts2;
 
 import junit.framework.Assert;
 
-import org.apache.struts2.StrutsTestCase;
+import org.apache.struts2.junit.StrutsTestCase;
 import org.junit.Before;
 import org.junit.Test;
 
