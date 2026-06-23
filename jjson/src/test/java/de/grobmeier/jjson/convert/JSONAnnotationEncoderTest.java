@@ -15,12 +15,15 @@
  */
 package de.grobmeier.jjson.convert;
 
+import de.grobmeier.jjson.JSONException;
 import junit.framework.TestCase;
 
 import org.junit.Test;
 
 import de.grobmeier.jjson.convert.JSONAnnotationEncoder;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -131,4 +134,26 @@ public class JSONAnnotationEncoderTest {
         TestCase.assertEquals("{\"value\":\"myvalue\",\"someOtherValue\":\"other\"}", json);
     }
 
+    @Test
+    public void testNestedMapEncoding() throws Exception {
+        Map<String, Object> inner = new HashMap<String, Object>();
+        inner.put("name", "value");
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("inner", inner);
+
+        JSONAnnotationEncoder encoder = new JSONAnnotationEncoder();
+        String json = encoder.encode(map);
+
+        TestCase.assertEquals("{\"inner\":{\"name\":\"value\"}}", json);
+    }
+
+    @Test(expected = JSONException.class)
+    public void testSelfReferencingMapThrowsJSONException() throws Exception {
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("t", map);
+
+        JSONAnnotationEncoder encoder = new JSONAnnotationEncoder();
+        encoder.encode(map);
+    }
 }
