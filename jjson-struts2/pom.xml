@@ -67,7 +67,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <struts2.version>6.10.0</struts2.version>
         <jjson.version>0.1.9-SNAPSHOT</jjson.version>
-        <spring.version>5.3.39</spring.version>
+        <spring.version>6.1.21</spring.version>
     </properties> 
     
     <build>
