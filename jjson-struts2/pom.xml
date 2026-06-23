@@ -4,12 +4,12 @@
     <parent>
         <artifactId>parent</artifactId>
         <groupId>de.grobmeier.json</groupId>
-        <version>8-SNAPSHOT</version>
+        <version>8</version>
     </parent>
 
     <artifactId>jjson-struts2</artifactId>
     <packaging>jar</packaging>
-    <version>0.0.10-SNAPSHOT</version>
+    <version>0.0.10</version>
     <name>jjson-struts2</name>
     
     <description>
@@ -45,7 +45,7 @@
         <url>https://github.com/grobmeier/jjson</url>
         <connection>scm:git:git://github.com/grobmeier/jjson.git</connection>
         <developerConnection>scm:git:git@github.com:grobmeier/jjson.git</developerConnection>
-      <tag>HEAD</tag>
+      <tag>parent-8</tag>
   </scm>
 
     <mailingLists>
@@ -66,7 +66,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <struts2.version>6.10.0</struts2.version>
-        <jjson.version>0.1.8-SNAPSHOT</jjson.version>
+        <jjson.version>0.1.8</jjson.version>
         <spring.version>5.3.39</spring.version>
     </properties> 
     
