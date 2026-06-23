@@ -67,7 +67,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <struts2.version>6.10.0</struts2.version>
         <jjson.version>0.1.9-SNAPSHOT</jjson.version>
-        <spring.version>5.3.39</spring.version>
     </properties> 
     
     <build>
@@ -104,19 +103,6 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <scope>test</scope>
-        </dependency>
-		
-        <dependency>
-            <groupId>org.apache.struts</groupId>
-            <artifactId>struts2-junit-plugin</artifactId>
-            <version>${struts2.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-            <version>${spring.version}</version>
             <scope>test</scope>
         </dependency>
 		
