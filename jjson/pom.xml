@@ -138,4 +138,48 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
+    <profiles>
+        <profile>
+            <id>sbom-enforcer</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.cyclonedx</groupId>
+                        <artifactId>cyclonedx-maven-plugin</artifactId>
+                        <version>2.9.1</version>
+                        <configuration>
+                            <skipNotDeployed>false</skipNotDeployed>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>make-sbom</id>
+                                <phase>package</phase>
+                                <goals><goal>makeBom</goal></goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>io.github.sbom-enforcer</groupId>
+                        <artifactId>sbom-enforcer-maven-plugin</artifactId>
+                        <version>0.2.1-SNAPSHOT</version>
+                        <executions>
+                            <execution>
+                                <id>check-sbom</id>
+                                <phase>verify</phase>
+                                <goals><goal>check</goal></goals>
+                                <configuration>
+                                    <rules>
+                                        <checksum/>
+                                        <validateReferences>
+                                            <failOnDependencies>false</failOnDependencies>
+                                        </validateReferences>
+                                    </rules>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
