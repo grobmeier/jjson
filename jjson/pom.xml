@@ -138,4 +138,50 @@
             <scope>compile</scope>
         </dependency>
     </dependencies>
+    <profiles>
+        <profile>
+            <id>sbom-verifier</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.cyclonedx</groupId>
+                        <artifactId>cyclonedx-maven-plugin</artifactId>
+                        <version>2.9.1</version>
+                        <configuration>
+                            <skipNotDeployed>false</skipNotDeployed>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>make-sbom</id>
+                                <phase>package</phase>
+                                <goals><goal>makeBom</goal></goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>de.grobmeier</groupId>
+                        <artifactId>sbom-verifier-maven-plugin</artifactId>
+                        <version>0.3.0</version>
+                        <executions>
+                            <execution>
+                                <id>check-sbom</id>
+                                <phase>verify</phase>
+                                <goals><goal>check</goal></goals>
+                                <configuration>
+                                    <requireSbom>true</requireSbom>
+                                    <rules>
+                                        <completeness/>
+                                        <checksum/>
+                                        <validateReferences>
+                                            <failOnDependencies>false</failOnDependencies>
+                                        </validateReferences>
+                                    </rules>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
