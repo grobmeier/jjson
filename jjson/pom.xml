@@ -140,7 +140,7 @@
     </dependencies>
     <profiles>
         <profile>
-            <id>sbom-enforcer</id>
+            <id>sbom-verifier</id>
             <build>
                 <plugins>
                     <plugin>
@@ -159,16 +159,18 @@
                         </executions>
                     </plugin>
                     <plugin>
-                        <groupId>io.github.sbom-enforcer</groupId>
-                        <artifactId>sbom-enforcer-maven-plugin</artifactId>
-                        <version>0.2.1-SNAPSHOT</version>
+                        <groupId>de.grobmeier</groupId>
+                        <artifactId>sbom-verifier-maven-plugin</artifactId>
+                        <version>0.3.0</version>
                         <executions>
                             <execution>
                                 <id>check-sbom</id>
                                 <phase>verify</phase>
                                 <goals><goal>check</goal></goals>
                                 <configuration>
+                                    <requireSbom>true</requireSbom>
                                     <rules>
+                                        <completeness/>
                                         <checksum/>
                                         <validateReferences>
                                             <failOnDependencies>false</failOnDependencies>
