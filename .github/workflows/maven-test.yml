@@ -27,5 +27,16 @@ jobs:
           java-version: '17'
           cache: maven
 
-      - name: Run tests
-        run: mvn -B test
+      - name: Run tests and verify SBOMs
+        run: mvn -B -ntp -Psbom-verifier -Dgpg.skip=true -Dmaven.javadoc.skip=true verify
+
+      - name: Upload SBOMs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jjson-sboms
+          path: |
+            jjson/target/bom.xml
+            jjson/target/bom.json
+          if-no-files-found: error
+          retention-days: 14
